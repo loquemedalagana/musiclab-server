@@ -1,0 +1,61 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "Gi3L1z99NQ1pIwJyL39y9AdUW4o",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "hy5cJYFX17n7myLkGxaWXtlRZcI",
+      "id": "auqUW6nGZQ0",
+      "snippet": {
+        "publishedAt": "2020-09-28T11:00:00Z",
+        "channelId": "UCy1fruN1Tl636SMmyp4x48g",
+        "title": "[야다를 만나다] 레전드 보컬 전인혁 훈남 근황 .. '이미 슬픈사랑' 한 소절 불러주셨습니다",
+        "description": "1999년에 혜성처럼 등장해 2004년 해체된 그룹 야다.\n활동기간은 5년으로, 길지 않지만 '이미 슬픈 사랑', '진혼', '슬픈 다짐' 등 명곡을 남겼습니다.\n언제 들어도 함께 흥얼거리게 되는 멜로디...\n'오래된 곡'이라기 보다는 '영원히 듣기 좋은 곡' 이라고 표현해도 좋을 것 같습니다.\n여전히 '락 스피릿'이 몸 안에 꿈틀거린다는 보컬 전인혁 님을 만났습니다.",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/auqUW6nGZQ0/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/auqUW6nGZQ0/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/auqUW6nGZQ0/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/auqUW6nGZQ0/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          }
+        },
+        "channelTitle": "근황올림픽",
+        "tags": [
+          "야다",
+          "전인혁",
+          "근황",
+          "근황올림픽",
+          "인터뷰",
+          "90년대가요",
+          "락발라드",
+          "복고"
+        ],
+        "categoryId": "24",
+        "liveBroadcastContent": "none",
+        "localized": {
+          "title": "[야다를 만나다] 레전드 보컬 전인혁 훈남 근황 .. '이미 슬픈사랑' 한 소절 불러주셨습니다",
+          "description": "1999년에 혜성처럼 등장해 2004년 해체된 그룹 야다.\n활동기간은 5년으로, 길지 않지만 '이미 슬픈 사랑', '진혼', '슬픈 다짐' 등 명곡을 남겼습니다.\n언제 들어도 함께 흥얼거리게 되는 멜로디...\n'오래된 곡'이라기 보다는 '영원히 듣기 좋은 곡' 이라고 표현해도 좋을 것 같습니다.\n여전히 '락 스피릿'이 몸 안에 꿈틀거린다는 보컬 전인혁 님을 만났습니다."
+        },
+        "defaultAudioLanguage": "ko"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}

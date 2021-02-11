@@ -1,0 +1,80 @@
+{
+  "kind": "youtube#videoListResponse",
+  "etag": "AyAPU9WK7zLHAyBM9x9noy-toHA",
+  "items": [
+    {
+      "kind": "youtube#video",
+      "etag": "sZ_ZHLCSqo5dbx5NXURBFJpbfOU",
+      "id": "UMsZti6fpMA",
+      "snippet": {
+        "publishedAt": "2020-11-21T04:10:55Z",
+        "channelId": "UCCE4oHV3UzJAEiZWuyqBt7g",
+        "title": "볼보 S60 B5 인스크립션 2021 B&W오디오 테스트 with 전인혁(야다 보컬)",
+        "description": "볼보의 B&W 오디오는 상당한 만족감을 주는 것으로 유명합니다. 오디오 때문에 꼭 인스크립션 트림을 선택해야 한다고 할 정도죠. 그래서 그륩 야다에서 메인 보컬과 기타리스트로 활약했던 전인혁 형님과 오디오에 대한 얘기를 나눴습니다. #전인혁 #야다 #S60 #신형S60 #S60B5 #S60B5시승기 #S60B5 #S60B5가격 #S60B5인스크립션 #S60시승기 #S60B5인스크립션2021\n\n볼보 S60 B5 인스크립션 2021\n엔진 \nI4 터보 \n배기량 1969cc\n엔진최고출력(ps) 250/5700rpm\n모터출력(ps) 10/3000rpm\n엔진최대토크(kg.m) 35.7/1800~4800rpm\n엔진최대토크(kg.m) 4.1/2250rpm\n변속기 8단 자동\n\n섀시\n서스펜션 앞/뒤 스트럿/멀티링크\n브레이크 앞/뒤 V디스크\n스티어링 랙&피니언\n타이어 앞, 뒤 235/40 R19\n\n크기\n전장X전폭X전고 4760X1850X1430mm\n휠베이스 2872mm\n공차중량 2045kg\n\n성능\n0-100km/h 가속 6.7초\n최고속도(km/h) 180\n공인연비(복합/도심/고속) 11.6/10.1/14.4km/L\n이산화탄소 배출량 145g/km\n\n가격 5410만원\n이재림 유튜브 http://www.youtube.com/channel/UCCE4oHV3UzJAEiZWuyqBt7g\n원태아버지 네이버 포스트 http://naver.me/5azCm42q\n원태월드 1호점 네이버 블로그 https://jr0217.blog.me/\n원태월드 2호점 티스토리 http://oneteworld2.tistory.com\n원태아버지의 개러지 네이버TV http://tv.naver.com/onetv\n인스타그램 http://www.instagram.com/timlee2018",
+        "thumbnails": {
+          "default": {
+            "url": "https://i.ytimg.com/vi/UMsZti6fpMA/default.jpg",
+            "width": 120,
+            "height": 90
+          },
+          "medium": {
+            "url": "https://i.ytimg.com/vi/UMsZti6fpMA/mqdefault.jpg",
+            "width": 320,
+            "height": 180
+          },
+          "high": {
+            "url": "https://i.ytimg.com/vi/UMsZti6fpMA/hqdefault.jpg",
+            "width": 480,
+            "height": 360
+          },
+          "standard": {
+            "url": "https://i.ytimg.com/vi/UMsZti6fpMA/sddefault.jpg",
+            "width": 640,
+            "height": 480
+          },
+          "maxres": {
+            "url": "https://i.ytimg.com/vi/UMsZti6fpMA/maxresdefault.jpg",
+            "width": 1280,
+            "height": 720
+          }
+        },
+        "channelTitle": "이재림의 카잼TV_Studio CAR JAM",
+        "tags": [
+          "카잼TV",
+          "이재림의 카잼TV",
+          "원태아버지의 개러지",
+          "전인혁",
+          "전인혁밴드",
+          "S60",
+          "볼보 S60 B5 시승기",
+          "S60 시승기",
+          "S60 B5",
+          "S60 B5 시승기",
+          "S60 B5 2021",
+          "S60 B5 2021 시승기",
+          "S60 B5 모멘텀",
+          "S60 B5 인스크립션",
+          "S60 B5 R라인",
+          "S60 B5 R라인 시승기",
+          "뉴 S60",
+          "뉴 S60 시승기",
+          "신형 S60 B5 시승기",
+          "S60 B5 연비",
+          "S60 B5 계약",
+          "S60 B5 출고"
+        ],
+        "categoryId": "2",
+        "liveBroadcastContent": "none",
+        "localized": {
+          "title": "볼보 S60 B5 인스크립션 2021 B&W오디오 테스트 with 전인혁(야다 보컬)",
+          "description": "볼보의 B&W 오디오는 상당한 만족감을 주는 것으로 유명합니다. 오디오 때문에 꼭 인스크립션 트림을 선택해야 한다고 할 정도죠. 그래서 그륩 야다에서 메인 보컬과 기타리스트로 활약했던 전인혁 형님과 오디오에 대한 얘기를 나눴습니다. #전인혁 #야다 #S60 #신형S60 #S60B5 #S60B5시승기 #S60B5 #S60B5가격 #S60B5인스크립션 #S60시승기 #S60B5인스크립션2021\n\n볼보 S60 B5 인스크립션 2021\n엔진 \nI4 터보 \n배기량 1969cc\n엔진최고출력(ps) 250/5700rpm\n모터출력(ps) 10/3000rpm\n엔진최대토크(kg.m) 35.7/1800~4800rpm\n엔진최대토크(kg.m) 4.1/2250rpm\n변속기 8단 자동\n\n섀시\n서스펜션 앞/뒤 스트럿/멀티링크\n브레이크 앞/뒤 V디스크\n스티어링 랙&피니언\n타이어 앞, 뒤 235/40 R19\n\n크기\n전장X전폭X전고 4760X1850X1430mm\n휠베이스 2872mm\n공차중량 2045kg\n\n성능\n0-100km/h 가속 6.7초\n최고속도(km/h) 180\n공인연비(복합/도심/고속) 11.6/10.1/14.4km/L\n이산화탄소 배출량 145g/km\n\n가격 5410만원\n이재림 유튜브 http://www.youtube.com/channel/UCCE4oHV3UzJAEiZWuyqBt7g\n원태아버지 네이버 포스트 http://naver.me/5azCm42q\n원태월드 1호점 네이버 블로그 https://jr0217.blog.me/\n원태월드 2호점 티스토리 http://oneteworld2.tistory.com\n원태아버지의 개러지 네이버TV http://tv.naver.com/onetv\n인스타그램 http://www.instagram.com/timlee2018"
+        },
+        "defaultAudioLanguage": "ko"
+      }
+    }
+  ],
+  "pageInfo": {
+    "totalResults": 1,
+    "resultsPerPage": 1
+  }
+}
