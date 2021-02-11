@@ -10,7 +10,7 @@ export class YoutubeVideosController {
 
   @Get(':id')
   getOne(@Param('id') videoId: string) {
-    return `channel id ${videoId} will be returned`;
+    return `video id ${videoId} will be returned`;
   }
 
   // post
