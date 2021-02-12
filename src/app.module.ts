@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import * as Joi from 'joi';
+// modules
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -7,6 +8,10 @@ import { AppService } from './app.service';
 import { YoutubeChannelsModule } from './youtube-channels/youtube-channels.module';
 import { YoutubeVideosModule } from './youtube-videos/youtube-videos.module';
 import { TagsModule } from './tags/tags.module';
+// entities
+import { Tag } from './tags/entities/tag.entity';
+import { YoutubeVideo } from './youtube-videos/entities/youtube-video.entity';
+import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.entity';
 
 @Module({
   imports: [
@@ -37,7 +42,7 @@ import { TagsModule } from './tags/tags.module';
       logging:
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',
-      entities: [],
+      entities: [Tag, YoutubeVideo, YoutubeChannel],
     }),
     YoutubeChannelsModule,
     YoutubeVideosModule,
