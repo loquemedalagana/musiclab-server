@@ -1,14 +1,8 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column } from 'typeorm';
+import { CoreEntity } from '../../common/entities/core.entity';
 import { IsString } from 'class-validator';
 
-export class Tag {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ nullable: false })
-  @IsString()
-  title: string;
-
+export class Tag extends CoreEntity {
   @Column({ nullable: true })
   @IsString()
   thumbnail: string;

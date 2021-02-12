@@ -6,9 +6,9 @@ import { CreateYoutubeVideoDto } from './dtos/create-youtube-video-dto';
 export class YoutubeVideosController {
   constructor(private readonly youtubeVideosService: YoutubeVideosService) {}
 
+  // pagination???
   @Get()
   getAll() {
-    // infinite scroll will be added
     return this.youtubeVideosService.getAll();
   }
 

@@ -1,7 +1,6 @@
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Length } from 'class-validator';
+import { Column, OneToMany } from 'typeorm';
+import { YoutubeEntity } from '../../youtube/entities/youtube.entity';
 import { YoutubeVideo } from '../../youtube-videos/entities/youtube-video.entity';
-import { YoutubeThumbnailImage } from '../../youtube/types/thumbnail';
 
 export enum YoutubeChannelCategory {
   OFFICIAL = 'official',
@@ -10,25 +9,12 @@ export enum YoutubeChannelCategory {
   ETC = 'etc',
 }
 
-export class YoutubeChannel {
-  @PrimaryGeneratedColumn()
-  @Length(0, 25)
-  id: string;
-
+export class YoutubeChannel extends YoutubeEntity {
   @Column({ type: 'enum', enum: YoutubeChannelCategory, nullable: false })
   category: YoutubeChannelCategory;
 
   @Column({ nullable: false })
-  title: string;
-
-  @Column({ nullable: false })
-  description: string;
-
-  @Column({ nullable: false })
   playlistId: string;
-
-  @Column({ type: 'simple-json' })
-  thumbnails: YoutubeThumbnailImage;
 
   @OneToMany(() => YoutubeVideo, (video) => video.channel)
   videos: YoutubeVideo[];
