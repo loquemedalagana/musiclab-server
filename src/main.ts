@@ -6,6 +6,6 @@ async function musiclab() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
   // app.enableCors();
-  await app.listen(5020);
+  await app.listen(5000);
 }
 musiclab();
