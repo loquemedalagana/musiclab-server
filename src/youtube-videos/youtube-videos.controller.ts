@@ -1,16 +1,19 @@
 import { Controller, Get, Param } from '@nestjs/common';
+import { YoutubeVideosService } from './youtube-videos.service';
 
 @Controller('api/youtube/videos')
 export class YoutubeVideosController {
+  constructor(private readonly youtubeVideosService: YoutubeVideosService) {}
+
   @Get()
   getAll() {
     // infinite scroll will be added
-    return `all videos will be returned`;
+    return this.youtubeVideosService.getAll();
   }
 
   @Get(':id')
   getOne(@Param('id') videoId: string) {
-    return `video id ${videoId} will be returned`;
+    return this.youtubeVideosService.getOne(videoId);
   }
 
   // post
