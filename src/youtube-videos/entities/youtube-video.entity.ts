@@ -1,4 +1,14 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  RelationId,
+} from 'typeorm';
+import { JoinTable } from 'typeorm/browser';
+import { Length } from 'class-validator';
+import { YoutubeChannel } from '../../youtube-channels/entities/youtube-channel.entity';
+import { Tag } from '../../tags/entities/tag.entity';
 import { YoutubeThumbnailImage } from '../../youtube/types/thumbnail';
 
 export enum YoutubeVideoCategory {
@@ -12,6 +22,7 @@ export enum YoutubeVideoCategory {
 
 export class YoutubeVideo {
   @PrimaryGeneratedColumn()
+  @Length(0, 15)
   id: string;
 
   @Column({ type: 'enum', enum: YoutubeVideoCategory, default: 'Inhyuk' })
@@ -31,4 +42,14 @@ export class YoutubeVideo {
 
   @Column({ type: 'int' })
   visitedCount: number;
+
+  @ManyToOne(() => YoutubeChannel, (channel) => channel.videos)
+  channel: YoutubeChannel;
+
+  @RelationId((video: YoutubeVideo) => video.channel)
+  channelId: string;
+
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  tags: Tag[];
 }
