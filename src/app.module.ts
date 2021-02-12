@@ -12,6 +12,19 @@ import { TagsModule } from './tags/tags.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath:
+        process.env.NODE_ENV === 'dev'
+          ? '.env.dev'
+          : 'production'
+          ? '.env'
+          : '.env.test',
+      validationSchema: Joi.object({
+        NODE_ENV: Joi.string().valid('dev', 'production', 'test').required(),
+        DB_HOST: Joi.string(),
+        DB_USERNAME: Joi.string(),
+        DB_PASSWORD: Joi.string(),
+        DB_NAME: Joi.string(),
+      }),
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -20,9 +33,10 @@ import { TagsModule } from './tags/tags.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      synchronize: process.env.NODE_ENV !== 'prod',
+      synchronize: process.env.NODE_ENV !== 'production',
       logging:
-        process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test',
+        process.env.NODE_ENV !== 'production' &&
+        process.env.NODE_ENV !== 'test',
       entities: [],
     }),
     YoutubeChannelsModule,

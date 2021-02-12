@@ -1,10 +1,19 @@
 {
   "name": "musiclab-server-v2",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "0.2.1",
+  "description": "musiclab server 2.0",
   "private": true,
-  "license": "UNLICENSED",
+  "keywords": [
+    "band",
+    "rock",
+    "vocal",
+    "yada",
+    "JeonInhyuk",
+    "guitar",
+    "JeonInhyukBand"
+  ],
+  "author": "Jeon Inhyuk",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
