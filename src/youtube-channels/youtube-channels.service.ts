@@ -17,8 +17,6 @@ export class YoutubeChannelsService {
     private connection: Connection,
   ) {}
 
-
-
   // 채널 더하기
   async addChannelVideos(videos: Array<YoutubeVideo>) {
     const queryRunner = this.connection.createQueryRunner();

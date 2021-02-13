@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeVideo } from './entities/youtube-video.entity';
 import { CreateYoutubeVideoDto } from './dtos/create-youtube-video-dto';
+import singleVideoDataString from './sampleData/string/singleVideoDataString';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -22,6 +23,25 @@ export class YoutubeVideosService {
   }
 
   create(youtubeVideoData: CreateYoutubeVideoDto) {
-    console.log(youtubeVideoData);
+    const newVideo = new YoutubeVideo();
+    const reg = new RegExp(youtubeVideoData.videoId);
+
+    // 나중에 axios로 대체
+    const [videoDataString] = singleVideoDataString.filter((video) =>
+      reg.test(video),
+    );
+    if (!videoDataString) {
+      throw new BadRequestException('not found video data');
+    }
+
+    const [videoRawData] = JSON.parse(videoDataString).items;
+    newVideo.id = youtubeVideoData.videoId;
+    newVideo.category = youtubeVideoData.category;
+    newVideo.thumbnails = videoRawData.snippet.thumbnails;
+    newVideo.title = videoRawData.snippet.title;
+    newVideo.description = videoRawData.snippet.description;
+    newVideo.publishedAt = videoRawData.snippet.publishedAt;
+
+    console.log(newVideo);
   }
 }
