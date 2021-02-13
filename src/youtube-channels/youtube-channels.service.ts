@@ -21,10 +21,22 @@ export class YoutubeChannelsService {
     console.log(channelData);
     const reg = new RegExp(channelData.channelId);
     if (!reg.test(JeonInhyukBandOfficialChannelVideoList)) {
+      // throw error object
       console.log('not exist');
       return;
     }
-    console.log(reg.test(JeonInhyukBandOfficialChannelVideoList));
-    console.log(getChannelInfo(channelData.channelId));
+    const response = getChannelInfo(channelData.channelId);
+    const [channelRawData] = response.items;
+    const newChannel = new YoutubeChannel();
+    newChannel.category = channelData.category;
+    newChannel.playlistId =
+      channelRawData.contentDetails?.relatedPlaylists?.uploads;
+    newChannel.id = channelRawData.id;
+    newChannel.title = channelRawData.snippet.title;
+    newChannel.description = channelRawData.snippet.description;
+    newChannel.thumbnails = channelRawData.snippet.thumbnails;
+    newChannel.publishedAt = channelRawData.snippet.publishedAt;
+
+    console.log(newChannel);
   }
 }

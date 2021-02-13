@@ -24,7 +24,7 @@ export class YoutubeVideo extends YoutubeEntity {
   @Column({ type: 'enum', enum: YoutubeVideoCategory, default: 'Inhyuk' })
   category: YoutubeVideoCategory;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', default: 0 })
   visitedCount: number;
 
   @ManyToOne(() => YoutubeChannel, (channel) => channel.videos)

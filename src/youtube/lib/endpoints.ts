@@ -32,8 +32,7 @@ export const getEndpointFromPlayListId = (
 ) =>
   `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet${comma}CcontentDetails&playlistId=${playlistId}&maxResults=${maxResult}&key=${apiKey}`;
 
+// 나중에 axios로 대체
 export const getChannelInfo = (channelId: string) => {
-  const channelData = JSON.parse(JeonInhyukBandOfficialChannelStringData);
-  console.log(channelData);
-  return channelData;
+  return JSON.parse(JeonInhyukBandOfficialChannelStringData);
 };

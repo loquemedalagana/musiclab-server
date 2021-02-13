@@ -1,4 +1,4 @@
-const getVideoDataFromVideoId = (data) =>
+const getChannelData = (data) =>
   data
     ? data.items.map(({ id, snippet }) => {
         return {
@@ -8,4 +8,4 @@ const getVideoDataFromVideoId = (data) =>
       })[0]
     : null;
 
-export default getVideoDataFromVideoId;
+export default getChannelData;

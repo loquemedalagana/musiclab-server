@@ -2,7 +2,7 @@ const getVideoDataFromPlaylistId = (data) =>
   data
     ? data.items.map(({ snippet, contentDetails }) => {
         return {
-          videoId: contentDetails.videoId,
+          id: contentDetails.videoId,
           ...snippet,
         };
       })

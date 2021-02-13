@@ -16,6 +16,7 @@ export class YoutubeVideosService {
     return this.youtubeVideosRepository.find();
   }
 
+  // 조회수 1씩 더하기 find and update 후 return 해주기
   getOne(id: string) {
     return this.youtubeVideosRepository.findOne(id);
   }
