@@ -3,10 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
+import { Tag } from 'src/tags/entities/tag.entity';
 import { CreateYoutubeChannelDto } from './dtos/create-youtube-channel.dto';
 import { getChannelInfo, getChannelVideoList } from '../youtube/lib/endpoints';
 import getVideoDataFromPlaylistId from './lib/getVideoDataFromPlaylistId';
 import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
+import { extractTags } from '../youtube-videos/lib/extractTags';
 
 @Injectable()
 export class YoutubeChannelsService {
@@ -58,7 +60,28 @@ export class YoutubeChannelsService {
     newChannel.thumbnails = channelRawData.snippet.thumbnails;
     newChannel.publishedAt = channelRawData.snippet.publishedAt;
 
+    const videoListData = getVideoDataFromPlaylistId(responsedVideoList).map(
+      (video) => {
+        const newChannlVideo = new YoutubeVideo();
+        const tags = extractTags(video);
+
+        // 카테고리 다시 해주자ㅠㅠ
+        newChannlVideo.id = video.id;
+        newChannlVideo.publishedAt = video.publishedAt;
+        newChannlVideo.title = video.title;
+        newChannlVideo.description = video.description;
+        newChannlVideo.thumbnails = video.thumbnails;
+        newChannlVideo.channelId = video.channelId;
+        newChannlVideo.tags = tags.map((tag) => {
+          const newTag = new Tag();
+          newTag.title = tag;
+          return newTag;
+        });
+
+        return newChannlVideo;
+      },
+    );
     console.log(newChannel);
-    console.log(getVideoDataFromPlaylistId(responsedVideoList));
+    console.log(videoListData);
   }
 }
