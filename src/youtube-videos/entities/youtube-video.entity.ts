@@ -1,5 +1,4 @@
-import { Column, ManyToMany, ManyToOne, RelationId } from 'typeorm';
-import { JoinTable } from 'typeorm/browser';
+import { Column, ManyToMany, ManyToOne, RelationId, JoinTable } from 'typeorm';
 import { YoutubeEntity } from 'src/youtube/entities/youtube.entity';
 import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
 import { Tag } from 'src/tags/entities/tag.entity';

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { CreateYoutubeChannelDto } from './dtos/create-youtube-channel.dto';
-import {getChannelInfo} from "../youtube/lib/endpoints";
+import { getChannelInfo } from '../youtube/lib/endpoints';
 
 @Injectable()
 export class YoutubeChannelsService {
@@ -18,5 +18,11 @@ export class YoutubeChannelsService {
 
   create(channelData: CreateYoutubeChannelDto) {
     console.log(channelData);
+    if (!/UChNtl7wRLF6x4B4fp7KCyhQ/.test(channelData.channelId)) {
+      console.log('not exist');
+      return;
+    }
+    console.log(/UChNtl7wRLF6x4B4fp7KCyhQ/.test(channelData.channelId));
+    console.log(getChannelInfo(channelData.channelId));
   }
 }

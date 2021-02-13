@@ -49,26 +49,26 @@ const JeonInhyukBandSongs = [
 
 const etcTags = [`Man's Road`, '고음', '샤우팅', '무반주', '불후의 명곡'];
 
-const removeSpecialChars = (str) =>
+const removeSpecialChars = (str: string) =>
   str.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s+]/gi, '');
-const removeSpecialCharsAndSpace = (str) =>
+const removeSpecialCharsAndSpace = (str: string) =>
   str.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/gi, '');
 
 // 특수 문자 or 공백 제거
-exports.yadaFirstAlbumKeywords = yadaFirstAlbum.map((title) =>
+export const yadaFirstAlbumKeywords = yadaFirstAlbum.map((title: string) =>
   removeSpecialChars(title),
 );
-exports.yadaSecondAlbumKeywords = yadaSecondAlbum.map((title) =>
+export const yadaSecondAlbumKeywords = yadaSecondAlbum.map((title: string) =>
   removeSpecialChars(title),
 );
-exports.yadaThirdAlbumKeywords = yadaThirdAlbum.map((title) =>
+export const yadaThirdAlbumKeywords = yadaThirdAlbum.map((title: string) =>
   removeSpecialChars(title),
 );
-exports.yadaSpecialStoryAlbumKeywords = yadaSpecialStory.map((title) =>
-  removeSpecialChars(title),
+export const yadaSpecialStoryAlbumKeywords = yadaSpecialStory.map(
+  (title: string) => removeSpecialChars(title),
 );
-exports.jeonInhyukBandSongsKeywords = JeonInhyukBandSongs.map((title) =>
-  removeSpecialChars(title),
+export const jeonInhyukBandSongsKeywords = JeonInhyukBandSongs.map(
+  (title: string) => removeSpecialChars(title),
 );
 
 // 정규식 생성 (존재하는지?)
@@ -89,8 +89,8 @@ const albumTitleList = [
   { title: '전인혁밴드', description: '전인혁작곡', etc: '신곡' },
 ];
 
-exports.extractTags = ({ title }) => {
-  let tags = [];
+export const extractTags = ({ title }) => {
+  let tags: string[] = [];
   albumList.forEach((album, index) => {
     const taglist = album
       .filter(
