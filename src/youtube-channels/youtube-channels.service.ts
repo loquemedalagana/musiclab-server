@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { CreateYoutubeChannelDto } from './dtos/create-youtube-channel.dto';
+import {getChannelInfo} from "../youtube/lib/endpoints";
 
 @Injectable()
 export class YoutubeChannelsService {

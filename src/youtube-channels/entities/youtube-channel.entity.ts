@@ -1,6 +1,6 @@
 import { Column, OneToMany } from 'typeorm';
-import { YoutubeEntity } from '../../youtube/entities/youtube.entity';
-import { YoutubeVideo } from '../../youtube-videos/entities/youtube-video.entity';
+import { YoutubeEntity } from 'src/youtube/entities/youtube.entity';
+import { YoutubeVideo } from 'src/youtube-videos/entities/youtube-video.entity';
 
 export enum YoutubeChannelCategory {
   OFFICIAL = 'official',

@@ -19,7 +19,7 @@ export abstract class CoreEntity {
   updatedAt: Date;
 }
 
-// post, feedback, comment
+// post, feedback
 export abstract class PostCoreEntity extends CoreEntity {
   @Column({ type: 'text' })
   description: string;

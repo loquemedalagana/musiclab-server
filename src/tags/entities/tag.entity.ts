@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { CoreEntity } from '../../common/entities/core.entity';
+import { CoreEntity } from 'src/common/entities/core.entity';
 import { IsString } from 'class-validator';
 
 export class Tag extends CoreEntity {

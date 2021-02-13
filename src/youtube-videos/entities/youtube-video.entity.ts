@@ -1,8 +1,8 @@
 import { Column, ManyToMany, ManyToOne, RelationId } from 'typeorm';
 import { JoinTable } from 'typeorm/browser';
-import { YoutubeEntity } from '../../youtube/entities/youtube.entity';
-import { YoutubeChannel } from '../../youtube-channels/entities/youtube-channel.entity';
-import { Tag } from '../../tags/entities/tag.entity';
+import { YoutubeEntity } from 'src/youtube/entities/youtube.entity';
+import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
+import { Tag } from 'src/tags/entities/tag.entity';
 
 export enum YoutubeVideoCategory {
   OFFICIAL = 'official',

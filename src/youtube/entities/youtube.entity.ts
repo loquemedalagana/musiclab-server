@@ -1,9 +1,9 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, PrimaryColumn } from 'typeorm';
 import { Length } from 'class-validator';
-import { YoutubeThumbnailImage } from '../types/thumbnail';
+import { YoutubeThumbnailImage } from 'src/youtube/types/thumbnail';
 
 export abstract class YoutubeEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   @Length(10, 25)
   id: string;
 
