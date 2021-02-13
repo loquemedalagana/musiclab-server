@@ -3,6 +3,7 @@ import * as Joi from 'joi';
 // modules
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { YoutubeChannelsModule } from './youtube-channels/youtube-channels.module';
@@ -43,7 +44,9 @@ import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.enti
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',
       entities: [Tag, YoutubeVideo, YoutubeChannel],
+      //autoLoadEntities: true,
     }),
+    ScheduleModule.forRoot(),
     YoutubeChannelsModule,
     YoutubeVideosModule,
     TagsModule,
