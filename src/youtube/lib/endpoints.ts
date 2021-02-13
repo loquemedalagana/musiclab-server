@@ -4,8 +4,6 @@ import JeonInhyukBandOfficialChannelVideoList from '../../youtube-channels/sampl
 const JeonInhyukBandOfficialChannel = 'UChNtl7wRLF6x4B4fp7KCyhQ';
 const JeonInhyukBandPlayListId = 'UUhNtl7wRLF6x4B4fp7KCyhQ';
 
-const officialVideoList = JSON.parse(JeonInhyukBandOfficialChannelVideoList);
-
 const comma = '%2';
 
 const YOUTUBE_PLAYLIST_ITEMS_API =
@@ -35,4 +33,8 @@ export const getEndpointFromPlayListId = (
 // 나중에 axios로 대체
 export const getChannelInfo = (channelId: string) => {
   return JSON.parse(JeonInhyukBandOfficialChannelStringData);
+};
+
+export const getChannelVideoList = (playlistId: string) => {
+  return JSON.parse(JeonInhyukBandOfficialChannelVideoList);
 };
