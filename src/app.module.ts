@@ -44,7 +44,7 @@ import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.enti
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',
       entities: [Tag, YoutubeVideo, YoutubeChannel],
-      //autoLoadEntities: true,
+      autoLoadEntities: true,
     }),
     ScheduleModule.forRoot(),
     YoutubeChannelsModule,

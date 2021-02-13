@@ -3,7 +3,7 @@ import { Length } from 'class-validator';
 import { YoutubeThumbnailImage } from 'src/youtube/types/thumbnail';
 
 export abstract class YoutubeEntity {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'varchar', length: 20 })
   @Length(10, 25)
   id: string;
 

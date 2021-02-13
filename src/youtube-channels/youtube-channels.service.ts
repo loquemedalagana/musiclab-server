@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { CreateYoutubeChannelDto } from './dtos/create-youtube-channel.dto';
 import { getChannelInfo } from '../youtube/lib/endpoints';
+import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
 
 @Injectable()
 export class YoutubeChannelsService {
@@ -18,11 +19,12 @@ export class YoutubeChannelsService {
 
   create(channelData: CreateYoutubeChannelDto) {
     console.log(channelData);
-    if (!/UChNtl7wRLF6x4B4fp7KCyhQ/.test(channelData.channelId)) {
+    const reg = new RegExp(channelData.channelId);
+    if (!reg.test(JeonInhyukBandOfficialChannelVideoList)) {
       console.log('not exist');
       return;
     }
-    console.log(/UChNtl7wRLF6x4B4fp7KCyhQ/.test(channelData.channelId));
+    console.log(reg.test(JeonInhyukBandOfficialChannelVideoList));
     console.log(getChannelInfo(channelData.channelId));
   }
 }

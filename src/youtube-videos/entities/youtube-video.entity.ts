@@ -1,4 +1,11 @@
-import { Column, ManyToMany, ManyToOne, RelationId, JoinTable } from 'typeorm';
+import {
+  Column,
+  ManyToMany,
+  ManyToOne,
+  RelationId,
+  JoinTable,
+  Entity,
+} from 'typeorm';
 import { YoutubeEntity } from 'src/youtube/entities/youtube.entity';
 import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
@@ -12,6 +19,7 @@ export enum YoutubeVideoCategory {
 
 // 악기 추가하기
 
+@Entity()
 export class YoutubeVideo extends YoutubeEntity {
   @Column({ type: 'enum', enum: YoutubeVideoCategory, default: 'Inhyuk' })
   category: YoutubeVideoCategory;
