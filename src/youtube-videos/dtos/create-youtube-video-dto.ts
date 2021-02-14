@@ -1,7 +1,8 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
 import { YoutubeCategory } from '../../youtube/entities/youtube.entity';
+import { CoreOutput } from '../../common/dtos/output.dto';
 
-export class CreateYoutubeVideoDto {
+export class YoutubeVideoDtoInput {
   @IsString()
   readonly videoId: string;
 
@@ -11,4 +12,8 @@ export class CreateYoutubeVideoDto {
   @IsOptional()
   @IsString({ each: true })
   readonly tags: string[];
+}
+
+export class YoutubeVideoOutput extends CoreOutput {
+  videoTitle?: string;
 }

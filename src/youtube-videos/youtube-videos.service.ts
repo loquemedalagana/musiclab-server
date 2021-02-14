@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeVideo } from './entities/youtube-video.entity';
-import { CreateYoutubeVideoDto } from './dtos/create-youtube-video-dto';
+import { YoutubeVideoDtoInput } from './dtos/create-youtube-video-dto';
 import singleVideoDataString from './sampleData/string/singleVideoDataString';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class YoutubeVideosService {
     return this.youtubeVideosRepository.findOne(id);
   }
 
-  create(youtubeVideoData: CreateYoutubeVideoDto) {
+  create(youtubeVideoData: YoutubeVideoDtoInput) {
     const newVideo = new YoutubeVideo();
     const reg = new RegExp(youtubeVideoData.videoId);
 

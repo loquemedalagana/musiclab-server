@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { YoutubeChannelsService } from './youtube-channels.service';
-import { CreateYoutubeChannelDto } from './dtos/create-youtube-channel.dto';
+import { YoutubeChannelInput } from './dtos/create-youtube-channel.dto';
 
 @Controller('api/youtube/channels')
 export class YoutubeChannelsController {
@@ -14,7 +14,7 @@ export class YoutubeChannelsController {
   }
 
   @Post()
-  create(@Body() channelData: CreateYoutubeChannelDto) {
+  create(@Body() channelData: YoutubeChannelInput) {
     return this.youtubeChannelsService.create(channelData);
   }
 }

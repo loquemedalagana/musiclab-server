@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { YoutubeVideosService } from './youtube-videos.service';
-import { CreateYoutubeVideoDto } from './dtos/create-youtube-video-dto';
+import { YoutubeVideoDtoInput } from './dtos/create-youtube-video-dto';
 
 @Controller('api/youtube/videos')
 export class YoutubeVideosController {
@@ -18,7 +18,7 @@ export class YoutubeVideosController {
   }
 
   @Post()
-  create(@Body() videoData: CreateYoutubeVideoDto) {
+  create(@Body() videoData: YoutubeVideoDtoInput) {
     return this.youtubeVideosService.create(videoData);
   }
 }
