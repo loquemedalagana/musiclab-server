@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
@@ -15,7 +15,7 @@ import {
 import { getChannelInfo, getChannelVideoList } from '../youtube/lib/endpoints';
 import getVideoDataFromPlaylistId from './lib/getVideoDataFromPlaylistId';
 import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
-import { extractTags } from '../youtube-videos/lib/extractTags';
+
 
 @Injectable()
 export class YoutubeChannelsService {
@@ -56,11 +56,6 @@ export class YoutubeChannelsService {
       const videoListData = getVideoDataFromPlaylistId(responsedVideoList).map(
         (video) => {
           const newChannlVideo = new YoutubeVideo();
-          const tags = extractTags(video.title);
-          tags.push('전인혁밴드');
-
-          // promise all array로 태그 저장 후 더하기
-
           newChannlVideo.category = inputChannelData.category;
           newChannlVideo.id = video.id;
           newChannlVideo.publishedAt = video.publishedAt;
@@ -68,8 +63,6 @@ export class YoutubeChannelsService {
           newChannlVideo.description = video.description;
           newChannlVideo.thumbnails = video.thumbnails;
           newChannlVideo.channelId = video.channelId;
-
-          console.log(tags);
 
           return newChannlVideo;
         },

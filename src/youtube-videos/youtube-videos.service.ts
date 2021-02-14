@@ -11,7 +11,6 @@ import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video-dto';
-import { extractTags } from './lib/extractTags';
 import singleVideoDataString from './sampleData/string/singleVideoDataString';
 
 @Injectable()
@@ -43,16 +42,11 @@ export class YoutubeVideosService {
       newVideo.title = videoRawData.snippet.title;
       newVideo.description = videoRawData.snippet.description;
       newVideo.publishedAt = videoRawData.snippet.publishedAt;
-      const tags = extractTags(newVideo.title);
-      const tagInputResult = await Promise.all(
-        tags.map((tag) => {
-          console.log('tagname', tag);
-          return this.tagRepository.findOrCreate(tag);
-        }),
-      );
-      console.log(tagInputResult);
-      newVideo.tags = tagInputResult;
-      await this.youtubeVideos.save(newVideo);
+      
+      console.log(newVideo);
+      this.tagRepository.findOrCreate(newVideo.title, true);
+
+      // await this.youtubeVideos.save(newVideo);
       return {
         ok: true,
         videoTitle: newVideo.title,
