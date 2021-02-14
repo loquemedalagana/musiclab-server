@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeVideo } from './entities/youtube-video.entity';
+import { Tag } from 'src/tags/entities/tag.entity';
 import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
@@ -12,7 +13,9 @@ import singleVideoDataString from './sampleData/string/singleVideoDataString';
 export class YoutubeVideosService {
   constructor(
     @InjectRepository(YoutubeVideo)
-    private readonly youtubeVideosRepository: Repository<YoutubeVideo>,
+    private readonly youtubeVideos: Repository<YoutubeVideo>,
+    @InjectRepository(Tag)
+    private readonly tags: Repository<Tag>,
   ) {}
 
   async create(
@@ -53,11 +56,11 @@ export class YoutubeVideosService {
 
   // async should be added
   async getAll(): Promise<YoutubeVideo[]> {
-    return this.youtubeVideosRepository.find();
+    return this.youtubeVideos.find();
   }
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
   getOne(id: string) {
-    return this.youtubeVideosRepository.findOne(id);
+    return this.youtubeVideos.findOne(id);
   }
 }

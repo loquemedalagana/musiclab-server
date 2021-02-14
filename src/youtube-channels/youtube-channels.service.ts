@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
+import { Tag, TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,
@@ -19,23 +19,11 @@ export class YoutubeChannelsService {
     @InjectRepository(YoutubeChannel)
     private readonly youtubeChannels: Repository<YoutubeChannel>,
     @InjectRepository(YoutubeVideo)
-    private connection: Connection,
+    private readonly youtubeVideos: Repository<YoutubeVideo>,
+    private readonly tagRepository: TagRepository,
   ) {}
 
-  async addChannelVideos(videos: Array<YoutubeVideo>) {
-    const queryRunner = this.connection.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    try {
-      // for loop and add tags
-      // commit
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-    } finally {
-      await queryRunner.release();
-    }
-  }
+  async addChannelVideos(videos: Array<YoutubeVideo>) {}
 
   async create(
     inputChannelData: YoutubeChannelInput,
@@ -64,7 +52,8 @@ export class YoutubeChannelsService {
       const videoListData = getVideoDataFromPlaylistId(responsedVideoList).map(
         (video) => {
           const newChannlVideo = new YoutubeVideo();
-          const tags = extractTags(video);
+          const tags = extractTags(video.title);
+          tags.push('전인혁밴드');
 
           newChannlVideo.category = inputChannelData.category;
           newChannlVideo.id = video.id;
@@ -73,11 +62,8 @@ export class YoutubeChannelsService {
           newChannlVideo.description = video.description;
           newChannlVideo.thumbnails = video.thumbnails;
           newChannlVideo.channelId = video.channelId;
-          newChannlVideo.tags = tags.map((tag) => {
-            const newTag = new Tag();
-            newTag.title = tag;
-            return newTag;
-          });
+
+          console.log(tags);
 
           return newChannlVideo;
         },

@@ -89,7 +89,7 @@ const albumTitleList = [
   { title: '전인혁밴드', description: '전인혁작곡', etc: '신곡' },
 ];
 
-export const extractTags = ({ title }) => {
+export const extractTags = (title: string) => {
   let tags: string[] = [];
   albumList.forEach((album, index) => {
     const taglist = album
