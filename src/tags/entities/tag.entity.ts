@@ -7,7 +7,7 @@ export class Tag extends CoreEntity {
   @Column({ nullable: true })
   @IsOptional()
   @IsString()
-  thumbnail: string;
+  thumbnail?: string;
 }
 
 @EntityRepository(Tag)
@@ -15,6 +15,7 @@ export class TagRepository extends Repository<Tag> {
   async findOrCreate(title: string): Promise<Tag> {
     const tagTitle = title.trim().toLowerCase().replace(/ /g, '');
     let tag = await this.findOne({ title: tagTitle });
+    console.log(tag, tagTitle);
     if (!tag) {
       tag = await this.save(this.create({ title: tagTitle }));
     }

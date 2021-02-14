@@ -1,13 +1,17 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeVideo } from './entities/youtube-video.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
+import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video-dto';
-import { extractTags } from "./lib/extractTags";
+import { extractTags } from './lib/extractTags';
 import singleVideoDataString from './sampleData/string/singleVideoDataString';
 
 @Injectable()
@@ -15,8 +19,7 @@ export class YoutubeVideosService {
   constructor(
     @InjectRepository(YoutubeVideo)
     private readonly youtubeVideos: Repository<YoutubeVideo>,
-    @InjectRepository(Tag)
-    private readonly tags: Repository<Tag>,
+    private readonly tagRepository: TagRepository,
   ) {}
 
   async create(
@@ -40,19 +43,23 @@ export class YoutubeVideosService {
       newVideo.title = videoRawData.snippet.title;
       newVideo.description = videoRawData.snippet.description;
       newVideo.publishedAt = videoRawData.snippet.publishedAt;
-
       const tags = extractTags(newVideo.title);
-      console.log(newVideo, tags);
+      const tagInputResult = await Promise.all(
+        tags.map((tag) => {
+          console.log('tagname', tag);
+          return this.tagRepository.findOrCreate(tag);
+        }),
+      );
+      console.log(tagInputResult);
+      newVideo.tags = tagInputResult;
+      await this.youtubeVideos.save(newVideo);
       return {
         ok: true,
         videoTitle: newVideo.title,
       };
     } catch (error) {
       console.error(error);
-      return {
-        ok: false,
-        error: 'Could not create video',
-      };
+      throw new InternalServerErrorException('video could not be added');
     }
   }
 

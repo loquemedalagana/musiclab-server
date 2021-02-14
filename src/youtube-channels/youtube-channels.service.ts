@@ -1,9 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
-import { Tag, TagRepository } from 'src/tags/entities/tag.entity';
+import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,
@@ -23,7 +27,7 @@ export class YoutubeChannelsService {
     private readonly tagRepository: TagRepository,
   ) {}
 
-  async addChannelVideos(videos: Array<YoutubeVideo>) {}
+  // async addChannelVideos(videos: Array<YoutubeVideo>) {}
 
   async create(
     inputChannelData: YoutubeChannelInput,
@@ -83,10 +87,7 @@ export class YoutubeChannelsService {
       };
     } catch (error) {
       console.error(error);
-      return {
-        ok: false,
-        error: 'Could not create channel',
-      };
+      throw new InternalServerErrorException('channel could not be added');
     }
   }
 
