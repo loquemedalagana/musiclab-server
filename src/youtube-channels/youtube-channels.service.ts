@@ -52,7 +52,6 @@ export class YoutubeChannelsService {
     const responsedVideoList = getChannelVideoList(playlistId);
 
     const newChannel = new YoutubeChannel();
-    newChannel.category = channelData.category;
     newChannel.playlistId = playlistId;
     newChannel.id = channelRawData.id;
     newChannel.title = channelRawData.snippet.title;
@@ -65,7 +64,7 @@ export class YoutubeChannelsService {
         const newChannlVideo = new YoutubeVideo();
         const tags = extractTags(video);
 
-        // 카테고리 다시 해주자ㅠㅠ
+        newChannlVideo.category = channelData.category;
         newChannlVideo.id = video.id;
         newChannlVideo.publishedAt = video.publishedAt;
         newChannlVideo.title = video.title;

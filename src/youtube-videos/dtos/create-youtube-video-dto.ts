@@ -1,12 +1,12 @@
 import { IsEnum, IsOptional, IsString } from 'class-validator';
-import { YoutubeVideoCategory } from '../entities/youtube-video.entity';
+import { YoutubeCategory } from '../../youtube/entities/youtube.entity';
 
 export class CreateYoutubeVideoDto {
   @IsString()
   readonly videoId: string;
 
-  @IsEnum(YoutubeVideoCategory)
-  readonly category: YoutubeVideoCategory;
+  @IsEnum(YoutubeCategory)
+  readonly category: YoutubeCategory;
 
   @IsOptional()
   @IsString({ each: true })

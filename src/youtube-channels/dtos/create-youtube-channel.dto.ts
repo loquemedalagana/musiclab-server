@@ -1,11 +1,11 @@
 import { IsEnum, IsString } from 'class-validator';
-import { YoutubeChannelCategory } from '../entities/youtube-channel.entity';
+import { YoutubeCategory } from '../../youtube/entities/youtube.entity';
 
 // data type of a request body
 export class CreateYoutubeChannelDto {
   @IsString()
   readonly channelId: string;
 
-  @IsEnum(YoutubeChannelCategory)
-  readonly category: YoutubeChannelCategory;
+  @IsEnum(YoutubeCategory)
+  readonly category: YoutubeCategory;
 }

@@ -11,9 +11,6 @@ export enum YoutubeChannelCategory {
 
 @Entity()
 export class YoutubeChannel extends YoutubeEntity {
-  @Column({ type: 'enum', enum: YoutubeChannelCategory, nullable: false })
-  category: YoutubeChannelCategory;
-
   @Column({ type: 'varchar', length: 20 })
   playlistId: string;
 
