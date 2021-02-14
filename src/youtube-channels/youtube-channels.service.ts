@@ -55,6 +55,8 @@ export class YoutubeChannelsService {
           const tags = extractTags(video.title);
           tags.push('전인혁밴드');
 
+          // promise all array로 태그 저장 후 더하기
+
           newChannlVideo.category = inputChannelData.category;
           newChannlVideo.id = video.id;
           newChannlVideo.publishedAt = video.publishedAt;

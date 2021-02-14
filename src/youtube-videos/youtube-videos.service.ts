@@ -7,6 +7,7 @@ import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video-dto';
+import { extractTags } from "./lib/extractTags";
 import singleVideoDataString from './sampleData/string/singleVideoDataString';
 
 @Injectable()
@@ -40,7 +41,8 @@ export class YoutubeVideosService {
       newVideo.description = videoRawData.snippet.description;
       newVideo.publishedAt = videoRawData.snippet.publishedAt;
 
-      console.log(newVideo);
+      const tags = extractTags(newVideo.title);
+      console.log(newVideo, tags);
       return {
         ok: true,
         videoTitle: newVideo.title,
