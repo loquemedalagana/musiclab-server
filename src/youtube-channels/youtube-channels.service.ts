@@ -22,7 +22,6 @@ export class YoutubeChannelsService {
     private connection: Connection,
   ) {}
 
-  // 채널 더하기
   async addChannelVideos(videos: Array<YoutubeVideo>) {
     const queryRunner = this.connection.createQueryRunner();
     await queryRunner.connect();
@@ -36,10 +35,6 @@ export class YoutubeChannelsService {
     } finally {
       await queryRunner.release();
     }
-  }
-
-  getOne(id: string): Promise<YoutubeChannel> {
-    return this.youtubeChannels.findOne(id);
   }
 
   async create(
@@ -90,6 +85,10 @@ export class YoutubeChannelsService {
       console.log(newChannel);
       console.log(videoListData);
 
+      // 영상들 저장
+
+      // await this.youtubeChannels.save(newChannel);
+
       return {
         ok: true,
         channelTitle: newChannel.title,
@@ -101,5 +100,9 @@ export class YoutubeChannelsService {
         error: 'Could not create channel',
       };
     }
+  }
+
+  getOne(id: string): Promise<YoutubeChannel> {
+    return this.youtubeChannels.findOne(id);
   }
 }

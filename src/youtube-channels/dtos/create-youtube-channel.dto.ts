@@ -12,5 +12,6 @@ export class YoutubeChannelInput {
 }
 
 export class YoutubeChannelOutput extends CoreOutput {
+  @IsString()
   channelTitle?: string;
 }
