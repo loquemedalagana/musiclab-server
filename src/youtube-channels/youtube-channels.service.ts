@@ -5,17 +5,14 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  YoutubeVideo,
-  getVideoDataFromPlaylistId,
-} from 'src/youtube-videos/entities/youtube-video.entity';
+import { YoutubeVideo } from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,
 } from './dtos/create-youtube-channel.dto';
-import { getChannelInfo, getChannelVideoList } from '../youtube/lib/endpoints';
+import { getChannelInfo } from '../youtube/lib/endpoints';
 import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
 
 @Injectable()
@@ -53,23 +50,7 @@ export class YoutubeChannelsService {
       newChannel.thumbnails = channelRawData.snippet.thumbnails;
       newChannel.publishedAt = channelRawData.snippet.publishedAt;
 
-      const responsedVideoList = getChannelVideoList(playlistId);
-      const videoListData = getVideoDataFromPlaylistId(responsedVideoList).map(
-        (video) => {
-          const newChannlVideo = new YoutubeVideo();
-          newChannlVideo.category = inputChannelData.category;
-          newChannlVideo.id = video.id;
-          newChannlVideo.publishedAt = video.publishedAt;
-          newChannlVideo.title = video.title;
-          newChannlVideo.description = video.description;
-          newChannlVideo.thumbnails = video.thumbnails;
-          newChannlVideo.channelId = video.channelId;
-
-          return newChannlVideo;
-        },
-      );
       console.log(newChannel);
-      console.log(videoListData);
 
       // 영상들 저장
 

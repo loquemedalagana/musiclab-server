@@ -62,9 +62,22 @@ export const getVideoDataFromPlaylistId = (data) =>
     : [];
 
 export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
-  private async findOrCreate(videoData: any) {}
+  private async findOrCreate(
+    downLoadedVideoData: any,
+    category: string,
+  ): Promise<YoutubeVideo> {
+    let video = await this.manager.findOne(YoutubeVideo, {
+      id: downLoadedVideoData?.contentDetails.videoId,
+    });
+    if (!video) {
+      video = new YoutubeVideo();
+    }
+
+    return video;
+  }
 
   addYoutubeVideoList(playlistId: string, category: string) {
     const responsedVideoList = getChannelVideoList(playlistId);
+    // promise all return
   }
 }
