@@ -13,7 +13,7 @@ import {
   YoutubeChannelOutput,
 } from './dtos/create-youtube-channel.dto';
 import { getChannelInfo } from '../youtube/lib/endpoints';
-import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
+import JeonInhyukBandOfficialChannelVideoList from 'src/youtube/dummyData/JeonInhyukBandOfficialChannelVideoList';
 
 @Injectable()
 export class YoutubeChannelsService {
@@ -23,12 +23,10 @@ export class YoutubeChannelsService {
     private readonly youtubeVideoRepository: YoutubeVideoRepository,
   ) {}
 
-  // async addChannelVideos(videos: Array<YoutubeVideo>) {}
-
   async create(
     inputChannelData: YoutubeChannelInput,
   ): Promise<YoutubeChannelOutput> {
-    console.log(inputChannelData);
+    // 이 부분 역시 나중에 axios로 대체
     const reg = new RegExp(inputChannelData.channelId);
     if (!reg.test(JeonInhyukBandOfficialChannelVideoList)) {
       throw new BadRequestException('cannot found channel data');

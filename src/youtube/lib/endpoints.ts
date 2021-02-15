@@ -1,5 +1,5 @@
-import JeonInhyukBandOfficialChannelStringData from '../../youtube-channels/sampleData/string/JeonInhyukBandOfficialChannelStringData';
-import JeonInhyukBandOfficialChannelVideoList from '../../youtube-channels/sampleData/string/JeonInhyukBandOfficialChannelVideoList';
+import JeonInhyukBandOfficialChannelStringData from 'src/youtube/dummyData/JeonInhyukBandOfficialChannelStringData';
+import JeonInhyukBandOfficialChannelVideoList from 'src/youtube/dummyData/JeonInhyukBandOfficialChannelVideoList';
 
 const JeonInhyukBandOfficialChannel = 'UChNtl7wRLF6x4B4fp7KCyhQ';
 const JeonInhyukBandPlayListId = 'UUhNtl7wRLF6x4B4fp7KCyhQ';
