@@ -1,5 +1,6 @@
 import {
   AbstractRepository,
+  EntityRepository,
   Column,
   Entity,
   JoinTable,
@@ -61,6 +62,7 @@ export const getVideoDataFromPlaylistId = (data) =>
       })
     : [];
 
+@EntityRepository(YoutubeVideo)
 export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
   private async findOrCreate(
     downLoadedVideoData: any,

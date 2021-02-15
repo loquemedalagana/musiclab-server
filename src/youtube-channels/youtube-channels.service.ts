@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { YoutubeVideo } from 'src/youtube-videos/entities/youtube-video.entity';
+import { YoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
-import { TagRepository } from 'src/tags/entities/tag.entity';
+
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,
@@ -20,9 +20,7 @@ export class YoutubeChannelsService {
   constructor(
     @InjectRepository(YoutubeChannel)
     private readonly youtubeChannels: Repository<YoutubeChannel>,
-    @InjectRepository(YoutubeVideo)
-    private readonly youtubeVideos: Repository<YoutubeVideo>,
-    private readonly tagRepository: TagRepository,
+    private readonly youtubeVideoRepository: YoutubeVideoRepository,
   ) {}
 
   // async addChannelVideos(videos: Array<YoutubeVideo>) {}
