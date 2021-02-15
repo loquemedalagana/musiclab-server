@@ -71,12 +71,29 @@ export class YoutubeVideosService {
 
   // async should be added
   async getAll(): Promise<YoutubeVideo[]> {
-    return this.youtubeVideos.find();
+    try {
+      const allVideos = await this.youtubeVideos.find();
+      return allVideos;
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(
+        `couldn't load all video data due to server error`,
+      );
+    }
   }
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
-  // 태그도 같이 리턴해주기, 복합쿼리 사용
-  getOne(id: string) {
-    return this.youtubeVideos.findOne(id);
+  // 태그도 같이 리턴해주기, 복합쿼리 사용, 채널정보도 같이ㅠㅠ
+  async getOne(id: string): Promise<YoutubeVideo> {
+    try {
+      const video = await this.youtubeVideos.findOne(id, {
+        relations: ['tags'],
+      });
+      video.visitedCount += 1;
+      return this.youtubeVideos.save(video);
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(`the video couldn't be loaded`);
+    }
   }
 }
