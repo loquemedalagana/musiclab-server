@@ -4,7 +4,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import axios from 'axios';
 
 import { YoutubeVideo } from './entities/youtube-video.entity';
@@ -15,6 +15,7 @@ import {
 } from './dtos/create-youtube-video.dto';
 import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
 import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
+import { YoutubeChannel } from '../youtube-channels/entities/youtube-channel.entity';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -22,6 +23,7 @@ export class YoutubeVideosService {
     @InjectRepository(YoutubeVideo)
     private readonly youtubeVideos: Repository<YoutubeVideo>,
     private readonly tagRepository: TagRepository,
+    private readonly connection: Connection,
   ) {}
 
   private getYoutubeVideoData(videoId: string): Promise<any> {
@@ -70,9 +72,18 @@ export class YoutubeVideosService {
   }
 
   // async should be added
+  // channelTitle, channelThumbnailImage
   async getAll(): Promise<YoutubeVideo[]> {
     try {
-      const allVideos = await this.youtubeVideos.find();
+      const allVideos = await this.connection
+        .getRepository(YoutubeVideo)
+        .createQueryBuilder('video')
+        .leftJoinAndSelect(
+          YoutubeChannel,
+          'channel',
+          'video.channelId = channel.id',
+        )
+        .getMany();
       return allVideos;
     } catch (error) {
       console.error(error);
@@ -83,7 +94,7 @@ export class YoutubeVideosService {
   }
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
-  // 태그도 같이 리턴해주기, 복합쿼리 사용, 채널정보도 같이ㅠㅠ
+  // 태그도 같이 리턴해주기(title만), 복합쿼리 사용 (프사만 가져오기)
   async getOne(id: string): Promise<YoutubeVideo> {
     try {
       const video = await this.youtubeVideos.findOne(id, {
