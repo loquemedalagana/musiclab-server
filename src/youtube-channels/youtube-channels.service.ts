@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { YoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
-
+import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,
@@ -21,6 +21,7 @@ export class YoutubeChannelsService {
     @InjectRepository(YoutubeChannel)
     private readonly youtubeChannels: Repository<YoutubeChannel>,
     private readonly youtubeVideoRepository: YoutubeVideoRepository,
+    private readonly tagRepository: TagRepository,
   ) {}
 
   async create(
@@ -49,8 +50,12 @@ export class YoutubeChannelsService {
       console.log(newChannel);
 
       // 영상들 저장
-
-      // await this.youtubeChannels.save(newChannel);
+      newChannel.videos = await this.youtubeVideoRepository.addYoutubeVideoList(
+        playlistId,
+        newChannel.category,
+        this.tagRepository,
+      );
+      await this.youtubeChannels.save(newChannel);
 
       return {
         ok: true,

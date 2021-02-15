@@ -46,7 +46,10 @@ export class YoutubeVideosService {
       newVideo.description = videoRawData.snippet.description;
       newVideo.publishedAt = videoRawData.snippet.publishedAt;
 
-      newVideo.tags = await this.tagRepository.addTags(newVideo.title, true);
+      newVideo.tags = await this.tagRepository.addTags(
+        newVideo.title,
+        inputYoutubeVideoData.category === 'official',
+      );
       console.log(newVideo);
 
       await this.youtubeVideos.save(newVideo);

@@ -13,12 +13,15 @@ import {
   YoutubeEntity,
 } from 'src/youtube/entities/youtube.entity';
 import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
-import { Tag } from 'src/tags/entities/tag.entity';
+import { Tag, TagRepository } from 'src/tags/entities/tag.entity';
 
 // changed to axios
 import { getChannelVideoList } from 'src/youtube/lib/endpoints';
 import { YoutubeThumbnailImage } from 'src/youtube/types/thumbnail';
-import { NotFoundException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 
 export type DownLoadedYoutubeVideoData = {
   videoId: string;
@@ -71,6 +74,7 @@ export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
   private async findOrCreate(
     downLoadedVideoData: any,
     category: YoutubeCategory,
+    tagRepository: TagRepository,
   ): Promise<YoutubeVideo> {
     let video = await this.manager.findOne(YoutubeVideo, {
       id: downLoadedVideoData?.contentDetails.videoId,
@@ -86,6 +90,11 @@ export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
       video.channelId = downLoadedVideoData.snippet.channelId;
 
       // tags!!! TagRepository 객체 불러오기!
+      video.tags = await tagRepository.addTags(
+        video.title,
+        category === 'official',
+      );
+      console.log(video);
 
       await this.manager.save(video);
     }
@@ -93,7 +102,11 @@ export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
     return video;
   }
 
-  addYoutubeVideoList(playlistId: string, category: YoutubeCategory) {
+  addYoutubeVideoList(
+    playlistId: string,
+    category: YoutubeCategory,
+    tagRepository: TagRepository,
+  ): Promise<YoutubeVideo[]> {
     // 이 부분 axios로 대체
     const responsedVideoList = getChannelVideoList(playlistId)?.items;
 
@@ -102,5 +115,17 @@ export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
     }
 
     // promise all return
+    try {
+      return Promise.all<YoutubeVideo>(
+        responsedVideoList.map((videoData) =>
+          this.findOrCreate(videoData, category, tagRepository),
+        ),
+      );
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(
+        'failed to add videos from playlistID',
+      );
+    }
   }
 }

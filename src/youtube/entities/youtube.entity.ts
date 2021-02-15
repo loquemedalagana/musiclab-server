@@ -12,8 +12,8 @@ export enum YoutubeCategory {
 }
 
 export abstract class YoutubeEntity {
-  @PrimaryColumn({ type: 'varchar', length: 20 })
-  @Length(10, 25)
+  @PrimaryColumn({ type: 'varchar', length: 30 })
+  @Length(10, 30)
   id: string;
 
   @Column()
