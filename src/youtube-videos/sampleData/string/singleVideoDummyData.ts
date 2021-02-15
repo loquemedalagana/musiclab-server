@@ -1,4 +1,4 @@
-const singleVideoDataString: string[] = [
+const singleVideoDummyData: string[] = [
   `{
   "kind": "youtube#videoListResponse",
   "etag": "8_Ny-PZqv1lbupjHQvlgTZQ6KLU",
@@ -455,4 +455,4 @@ const singleVideoDataString: string[] = [
 `,
 ];
 
-export default singleVideoDataString;
+export default singleVideoDummyData;

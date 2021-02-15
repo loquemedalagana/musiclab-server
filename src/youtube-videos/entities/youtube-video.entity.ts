@@ -1,18 +1,39 @@
 import {
+  AbstractRepository,
   Column,
+  Entity,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   RelationId,
-  JoinTable,
-  Entity,
-  AbstractRepository,
 } from 'typeorm';
 import { YoutubeEntity } from 'src/youtube/entities/youtube.entity';
 import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
 import { Tag } from 'src/tags/entities/tag.entity';
 
 // changed to axios
-import { getChannelVideoList } from '../../youtube/lib/endpoints';
+import { getChannelVideoList } from 'src/youtube/lib/endpoints';
+import { YoutubeThumbnailImage } from 'src/youtube/types/thumbnail';
+
+export type DownLoadedYoutubeVideoData = {
+  videoId: string;
+  publishedAt: Date | string;
+  channelId: string;
+  title: string;
+  description: string;
+  thumbnails: YoutubeThumbnailImage;
+  channelTitle: string;
+  tags?: Array<string>;
+  newTags?: Array<string>;
+  categoryId: string;
+  liveBroadcastContent: string;
+  localized: {
+    title: string;
+    description: string;
+  };
+  defaultAudioLanguage?: string;
+  defaultLanguage?: string;
+};
 
 @Entity()
 export class YoutubeVideo extends YoutubeEntity {
@@ -30,8 +51,18 @@ export class YoutubeVideo extends YoutubeEntity {
   tags: Tag[];
 }
 
+export const getVideoDataFromPlaylistId = (data) =>
+  data
+    ? data.items.map(({ snippet, contentDetails }) => {
+        return {
+          id: contentDetails.videoId,
+          ...snippet,
+        };
+      })
+    : [];
+
 export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
-  // find or create
+  private async findOrCreate(videoData: any) {}
 
   addYoutubeVideoList(playlistId: string, category: string) {
     const responsedVideoList = getChannelVideoList(playlistId);

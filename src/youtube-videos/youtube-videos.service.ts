@@ -11,7 +11,7 @@ import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video-dto';
-import singleVideoDataString from './sampleData/string/singleVideoDataString';
+import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -28,7 +28,7 @@ export class YoutubeVideosService {
   ): Promise<YoutubeVideoOutput> {
     const reg = new RegExp(inputYoutubeVideoData.videoId);
     // 나중에 axios로 대체
-    const [videoDataString] = singleVideoDataString.filter((video) =>
+    const [videoDataString] = singleVideoDummyData.filter((video) =>
       reg.test(video),
     );
     if (!videoDataString) {

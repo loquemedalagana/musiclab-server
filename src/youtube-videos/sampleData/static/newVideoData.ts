@@ -1,23 +1,4 @@
-import { YoutubeThumbnailImage } from 'src/youtube/types/thumbnail';
-
-export type DownLoadedYoutubeVideoData = {
-  videoId: string;
-  publishedAt: Date | string;
-  channelId: string;
-  title: string;
-  description: string;
-  thumbnails: YoutubeThumbnailImage;
-  channelTitle: string;
-  tags?: Array<string>;
-  categoryId: string;
-  liveBroadcastContent: string;
-  localized: {
-    title: string;
-    description: string;
-  };
-  defaultAudioLanguage?: string;
-  defaultLanguage?: string;
-};
+import { DownLoadedYoutubeVideoData } from 'src/youtube-videos/entities/youtube-video.entity';
 
 const staticVideoData: Array<DownLoadedYoutubeVideoData> = [
   {

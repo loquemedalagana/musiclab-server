@@ -5,7 +5,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
+import {
+  YoutubeVideo,
+  getVideoDataFromPlaylistId,
+} from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
@@ -13,7 +16,6 @@ import {
   YoutubeChannelOutput,
 } from './dtos/create-youtube-channel.dto';
 import { getChannelInfo, getChannelVideoList } from '../youtube/lib/endpoints';
-import getVideoDataFromPlaylistId from './lib/getVideoDataFromPlaylistId';
 import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
 
 @Injectable()
@@ -42,7 +44,6 @@ export class YoutubeChannelsService {
       const [channelRawData] = responsedChannelData.items;
       const playlistId =
         channelRawData.contentDetails?.relatedPlaylists?.uploads;
-      const responsedVideoList = getChannelVideoList(playlistId);
 
       const newChannel = new YoutubeChannel();
       newChannel.playlistId = playlistId;
@@ -52,6 +53,7 @@ export class YoutubeChannelsService {
       newChannel.thumbnails = channelRawData.snippet.thumbnails;
       newChannel.publishedAt = channelRawData.snippet.publishedAt;
 
+      const responsedVideoList = getChannelVideoList(playlistId);
       const videoListData = getVideoDataFromPlaylistId(responsedVideoList).map(
         (video) => {
           const newChannlVideo = new YoutubeVideo();
