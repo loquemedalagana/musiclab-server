@@ -16,7 +16,6 @@ import { getChannelInfo, getChannelVideoList } from '../youtube/lib/endpoints';
 import getVideoDataFromPlaylistId from './lib/getVideoDataFromPlaylistId';
 import JeonInhyukBandOfficialChannelVideoList from './sampleData/string/JeonInhyukBandOfficialChannelVideoList';
 
-
 @Injectable()
 export class YoutubeChannelsService {
   constructor(

@@ -1,10 +1,11 @@
-import { Column, Entity, EntityRepository, Repository } from 'typeorm';
+import { Column, Entity, EntityRepository, AbstractRepository } from 'typeorm';
 import { CoreEntity } from 'src/common/entities/core.entity';
 import { IsOptional, IsString } from 'class-validator';
 import {
   albumList,
   albumTitleList,
 } from '../../common/staticData/yadaSongList';
+import { InternalServerErrorException } from '@nestjs/common';
 
 @Entity()
 export class Tag extends CoreEntity {
@@ -15,7 +16,7 @@ export class Tag extends CoreEntity {
 }
 
 @EntityRepository(Tag)
-export class TagRepository extends Repository<Tag> {
+export class TagRepository extends AbstractRepository<Tag> {
   private static removeSpecialChars(text: string): string {
     return text.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9|\s+]/gi, '');
   }
@@ -51,14 +52,36 @@ export class TagRepository extends Repository<Tag> {
     return tags;
   }
 
-  findOrCreate(
-    title: string,
+  private async findOrCreate(title: string): Promise<Tag> {
+    const tagName = title.trim().toLowerCase().replace(/\s+/g, '');
+    let tag = await this.manager.findOne(Tag, { title: tagName });
+    if (!tag) {
+      tag = new Tag();
+      tag.title = title;
+      await this.manager.save(tag);
+    }
+    return tag;
+  }
+
+  // 쿼리빌더 사용하기!!!
+  async addTags(
+    content: string,
     isOfficial: boolean,
     inputedTags?: Array<string>,
-  ) {
-    let extractedTags: string[] = this.extractTags(title);
+  ): Promise<Tag[]> {
+    let extractedTags: string[] = this.extractTags(content);
     if (isOfficial) extractedTags.push('전인혁밴드');
     if (inputedTags) extractedTags = extractedTags.concat(inputedTags);
+
     console.log(extractedTags);
+
+    try {
+      return Promise.all<Tag>(
+        extractedTags.map((tagTitle) => this.findOrCreate(tagTitle)),
+      );
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('failed to add tags');
+    }
   }
 }

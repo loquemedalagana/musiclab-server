@@ -21,6 +21,8 @@ export class YoutubeVideosService {
     private readonly tagRepository: TagRepository,
   ) {}
 
+  // 영상 불러오기는 axios + private로 불러오기
+
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
   ): Promise<YoutubeVideoOutput> {
@@ -42,11 +44,11 @@ export class YoutubeVideosService {
       newVideo.title = videoRawData.snippet.title;
       newVideo.description = videoRawData.snippet.description;
       newVideo.publishedAt = videoRawData.snippet.publishedAt;
-      
-      console.log(newVideo);
-      this.tagRepository.findOrCreate(newVideo.title, true);
 
-      // await this.youtubeVideos.save(newVideo);
+      newVideo.tags = await this.tagRepository.addTags(newVideo.title, true);
+      console.log(newVideo);
+
+      await this.youtubeVideos.save(newVideo);
       return {
         ok: true,
         videoTitle: newVideo.title,
