@@ -70,7 +70,7 @@ export const getVideoDataFromPlaylistId = (data) =>
     : [];
 
 @EntityRepository(YoutubeVideo)
-export class YoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
+export class SaveYoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
   private async findOrCreate(
     downLoadedVideoData: any,
     category: YoutubeCategory,

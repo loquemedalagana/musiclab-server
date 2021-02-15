@@ -1,6 +1,6 @@
 import { IsEnum, IsString } from 'class-validator';
-import { YoutubeCategory } from '../../youtube/entities/youtube.entity';
-import { CoreOutput } from '../../common/dtos/output.dto';
+import { YoutubeCategory } from 'src/youtube/entities/youtube.entity';
+import { CoreOutput } from 'src/common/dtos/output.dto';
 
 // data type of a request body
 export class YoutubeChannelInput {

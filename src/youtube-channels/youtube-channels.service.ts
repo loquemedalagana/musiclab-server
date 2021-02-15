@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { YoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
+import { SaveYoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
@@ -20,7 +20,7 @@ export class YoutubeChannelsService {
   constructor(
     @InjectRepository(YoutubeChannel)
     private readonly youtubeChannels: Repository<YoutubeChannel>,
-    private readonly youtubeVideoRepository: YoutubeVideoRepository,
+    private readonly saveYoutubeVideoRepository: SaveYoutubeVideoRepository,
     private readonly tagRepository: TagRepository,
   ) {}
 
@@ -50,7 +50,7 @@ export class YoutubeChannelsService {
       console.log(newChannel);
 
       // 영상들 저장
-      newChannel.videos = await this.youtubeVideoRepository.addYoutubeVideoList(
+      newChannel.videos = await this.saveYoutubeVideoRepository.addYoutubeVideoList(
         playlistId,
         newChannel.category,
         this.tagRepository,
@@ -68,6 +68,7 @@ export class YoutubeChannelsService {
   }
 
   getOne(id: string): Promise<YoutubeChannel> {
+    // 영상 리스트도 같이 가져오기
     return this.youtubeChannels.findOne(id);
   }
 }

@@ -10,7 +10,7 @@ import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
-} from './dtos/create-youtube-video-dto';
+} from './dtos/create-youtube-video.dto';
 import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
 
 @Injectable()
@@ -69,6 +69,7 @@ export class YoutubeVideosService {
   }
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
+  // 태그도 같이 리턴해주기
   getOne(id: string) {
     return this.youtubeVideos.findOne(id);
   }
