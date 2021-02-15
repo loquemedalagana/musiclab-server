@@ -129,3 +129,13 @@ export class SaveYoutubeVideoRepository extends AbstractRepository<YoutubeVideo>
     }
   }
 }
+
+@EntityRepository(YoutubeVideo)
+export class GetYoutubeVideoRepository extends AbstractRepository<YoutubeVideo>{
+  // get all videos with profile image
+
+  // find by tags
+
+  // up visited count
+
+}

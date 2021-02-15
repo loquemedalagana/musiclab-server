@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -67,8 +68,18 @@ export class YoutubeChannelsService {
     }
   }
 
-  getOne(id: string): Promise<YoutubeChannel> {
-    // 영상 리스트도 같이 가져오기
-    return this.youtubeChannels.findOne(id);
+  async getOne(id: string): Promise<YoutubeChannel> {
+    try {
+      const channelData = await this.youtubeChannels.findOne(id, {
+        relations: ['videos'],
+      });
+      if (!channelData) {
+        throw new NotFoundException('해당 채널이 등록되어 있지 않습니다.');
+      }
+      return channelData;
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('internal server error');
+    }
   }
 }

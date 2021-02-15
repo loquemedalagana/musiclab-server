@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import axios from 'axios';
+
 import { YoutubeVideo } from './entities/youtube-video.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
@@ -12,6 +14,7 @@ import {
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video.dto';
 import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
+import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -21,7 +24,10 @@ export class YoutubeVideosService {
     private readonly tagRepository: TagRepository,
   ) {}
 
-  // 영상 불러오기는 axios + private로 불러오기
+  private getYoutubeVideoData(videoId: string): Promise<any> {
+    const endpoint = getEndpointFromVideoId(videoId);
+    return axios.get(endpoint);
+  }
 
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
@@ -69,7 +75,7 @@ export class YoutubeVideosService {
   }
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
-  // 태그도 같이 리턴해주기
+  // 태그도 같이 리턴해주기, 복합쿼리 사용
   getOne(id: string) {
     return this.youtubeVideos.findOne(id);
   }
