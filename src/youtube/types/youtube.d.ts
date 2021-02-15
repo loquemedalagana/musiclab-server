@@ -31,3 +31,7 @@ export interface IYoutubeChannel {
   updatedAt?: Date;
   deletedAt?: Date;
 }
+
+export interface IYoutubeFetchOptions {
+  youtubeApiKey: string;
+}

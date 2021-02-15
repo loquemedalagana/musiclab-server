@@ -1,21 +1,27 @@
 import {
   BadRequestException,
+  Inject,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import axios from 'axios';
+import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
+import { IYoutubeFetchOptions } from '../youtube/types/youtube';
 
+// entities
+import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
 import { YoutubeVideo } from './entities/youtube-video.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
 import {
   YoutubeVideoInput,
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video.dto';
+
+// dummyData (더미 데이터는 나중에 옮긴다)
 import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
 import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
-import { YoutubeChannel } from '../youtube-channels/entities/youtube-channel.entity';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -24,28 +30,35 @@ export class YoutubeVideosService {
     private readonly youtubeVideos: Repository<YoutubeVideo>,
     private readonly tagRepository: TagRepository,
     private readonly connection: Connection,
+    @Inject(CONFIG_OPTIONS) private readonly options: IYoutubeFetchOptions,
   ) {}
 
-  private getYoutubeVideoData(videoId: string): Promise<any> {
+  // 받아온 데이터 콘솔에 출력하기!!
+  /*
+    private getYoutubeVideoData(videoId: string): Promise<any> {
     const endpoint = getEndpointFromVideoId(videoId);
     return axios.get(endpoint);
   }
+  */
 
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
   ): Promise<YoutubeVideoOutput> {
+    /*
+
+    */
     const reg = new RegExp(inputYoutubeVideoData.videoId);
     // 나중에 axios로 대체
-    const [videoDataString] = singleVideoDummyData.filter((video) =>
+    const [fetchedVideoData] = singleVideoDummyData.filter((video) =>
       reg.test(video),
     );
-    if (!videoDataString) {
+    if (!fetchedVideoData) {
       throw new BadRequestException('not found video data');
     }
 
     try {
       const newVideo = new YoutubeVideo();
-      const [videoRawData] = JSON.parse(videoDataString).items;
+      const [videoRawData] = JSON.parse(fetchedVideoData).items;
 
       newVideo.id = inputYoutubeVideoData.videoId;
       newVideo.category = inputYoutubeVideoData.category;

@@ -30,6 +30,29 @@ import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.enti
         DB_USERNAME: Joi.string(),
         DB_PASSWORD: Joi.string(),
         DB_NAME: Joi.string(),
+
+        GOOGLE_API_KEY: Joi.string(),
+        MAILGUN_FROM_EMAIL: Joi.string(),
+        MAILGUN_DOMAIN_NAME: Joi.string(),
+        MAILGUN_API_KEY: Joi.string(),
+
+        AWS_ACCESS_KEY_ID: Joi.string(),
+        AWS_SECRET_KEY: Joi.string(),
+
+        SERVERURL: Joi.string(),
+        CLIENTURL: Joi.string(),
+
+        KAKAO_ID: Joi.string(),
+
+        FACEBOOK_ID: Joi.string(),
+        FACEBOOK_SECRET: Joi.string(),
+        FACEBOOK_CLIENT_ID: Joi.string(),
+
+        GOOGLE_ID: Joi.string(),
+        GOOGLE_SECRET: Joi.string(),
+
+        COOKIE_SECRET: Joi.string(),
+        SESSION_SECRET: Joi.string(),
       }),
     }),
     TypeOrmModule.forRoot({

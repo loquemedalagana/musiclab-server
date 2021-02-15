@@ -23,15 +23,17 @@ export const JeonInhyukBandPlayListEndPoint = (apiKey: unknown) =>
 // https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${YoutubeApiKey}
 export const getEndpointFromVideoId = (
   videoId: string,
-  apiKey?: string,
+  apiKey: string,
 ): string =>
   `${YOUTUBE_VIDEO_ITEM_API}?part=snippet&id=${videoId}&key=${apiKey}`;
 export const getEndpointFromPlayListId = (
   playlistId: string,
   maxResult: number,
-  apiKey: unknown,
+  apiKey: string,
 ): string =>
   `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet${comma}CcontentDetails&playlistId=${playlistId}&maxResults=${maxResult}&key=${apiKey}`;
+
+// 검색 기능 추가
 
 // 나중에 axios로 대체
 export const getChannelInfo = (channelId: string) => {
