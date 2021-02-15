@@ -22,7 +22,7 @@ export abstract class YoutubeEntity {
   @Column({ type: 'text' })
   description: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'datetime' })
   publishedAt: Date;
 
   @Column({ type: 'enum', enum: YoutubeCategory })
