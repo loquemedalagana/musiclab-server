@@ -38,6 +38,7 @@ export class YoutubeVideosService {
     try {
       const newVideo = new YoutubeVideo();
       const [videoRawData] = JSON.parse(videoDataString).items;
+
       newVideo.id = inputYoutubeVideoData.videoId;
       newVideo.category = inputYoutubeVideoData.category;
       newVideo.thumbnails = videoRawData.snippet.thumbnails;
