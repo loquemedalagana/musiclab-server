@@ -70,6 +70,8 @@ export class TagRepository extends AbstractRepository<Tag> {
     inputedTags?: Array<string>,
   ): Promise<Tag[]> {
     let extractedTags: string[] = this.extractTags(content);
+
+    // 여기서 나중에 중복제거 해주기!
     if (isOfficial) extractedTags.push('전인혁밴드');
     if (inputedTags) extractedTags = extractedTags.concat(inputedTags);
     console.log('태글 추출 됨?', extractedTags);

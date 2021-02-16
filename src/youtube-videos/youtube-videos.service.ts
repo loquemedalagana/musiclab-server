@@ -88,11 +88,17 @@ export class YoutubeVideosService {
       const allVideos = await this.connection
         .getRepository(YoutubeVideo)
         .createQueryBuilder('video')
-        .leftJoinAndSelect(
-          YoutubeChannel,
-          'channel',
-          'video.channelId = channel.id',
-        )
+        .select([
+          'video.title',
+          'video.description',
+          'video.thumbnails',
+          'video.publishedAt',
+          'video.visitedCount',
+          'video.category',
+          'channel.title',
+          'channel.thumbnails',
+        ])
+        .leftJoin('video.channel', 'channel')
         .getMany();
       return allVideos;
     } catch (error) {
