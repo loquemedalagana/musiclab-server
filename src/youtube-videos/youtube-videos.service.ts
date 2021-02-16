@@ -31,8 +31,6 @@ export class YoutubeVideosService {
     @Inject(CONFIG_OPTIONS) private readonly options: IYoutubeFetchOptions,
   ) {}
 
-  // 받아온 데이터 콘솔에 출력하기!!
-  // DjwBsB0qnOs 요걸로 테스트해보기
   private getYoutubeVideoData(videoId: string): Promise<any> {
     const endpoint = getEndpointFromVideoId(
       videoId,
@@ -81,8 +79,6 @@ export class YoutubeVideosService {
     }
   }
 
-  // async should be added
-  // channelTitle, channelThumbnailImage
   async getAll(): Promise<YoutubeVideo[]> {
     try {
       return await this.connection
@@ -112,8 +108,6 @@ export class YoutubeVideosService {
     }
   }
 
-  // 조회수 1씩 더하기 find and update 후 return 해주기
-  // 태그도 같이 리턴해주기(title만), 복합쿼리 사용 (프사만 가져오기)
   async getOne(videoId: string): Promise<YoutubeVideo> {
     try {
       const video = await this.connection
@@ -132,15 +126,13 @@ export class YoutubeVideosService {
         .leftJoin('video.channel', 'channel')
         .where('video.id = :id', { id: videoId })
         .getOneOrFail();
-      if (!video) {
-        throw new NotFoundException('failed to found this video!');
-      }
+
       video.visitedCount += 1;
       await this.youtubeVideos.save(video);
       return video;
     } catch (error) {
       console.error(error);
-      throw new InternalServerErrorException(`the video couldn't be loaded`);
+      throw new NotFoundException('failed to found this video!');
     }
   }
 }

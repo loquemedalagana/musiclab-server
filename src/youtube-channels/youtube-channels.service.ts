@@ -73,13 +73,10 @@ export class YoutubeChannelsService {
       const channelData = await this.youtubeChannels.findOne(id, {
         relations: ['videos'],
       });
-      if (!channelData) {
-        throw new NotFoundException('해당 채널이 등록되어 있지 않습니다.');
-      }
       return channelData;
     } catch (error) {
       console.error(error);
-      throw new InternalServerErrorException('internal server error');
+      throw new NotFoundException('해당 채널이 등록되어 있지 않습니다.');
     }
   }
 }
