@@ -123,8 +123,10 @@ export class YoutubeVideosService {
           'video.visitedCount',
           'video.category',
           'channel.thumbnails',
+          'tag.title',
         ])
         .leftJoin('video.channel', 'channel')
+        .leftJoin('video.tags', 'tag')
         .where('video.id = :id', { id: videoId })
         .getOneOrFail();
 
