@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { SaveYoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube-channel.entity';
 import { TagRepository } from 'src/tags/entities/tag.entity';
@@ -23,6 +23,7 @@ export class YoutubeChannelsService {
     private readonly youtubeChannels: Repository<YoutubeChannel>,
     private readonly saveYoutubeVideoRepository: SaveYoutubeVideoRepository,
     private readonly tagRepository: TagRepository,
+    private readonly connection: Connection,
   ) {}
 
   async create(
@@ -68,12 +69,25 @@ export class YoutubeChannelsService {
     }
   }
 
-  async getOne(id: string): Promise<YoutubeChannel> {
+  async getOne(channelId: string): Promise<YoutubeChannel> {
     try {
-      const channelData = await this.youtubeChannels.findOne(id, {
-        relations: ['videos'],
-      });
-      return channelData;
+      return await this.connection
+        .getRepository(YoutubeChannel)
+        .createQueryBuilder('channel')
+        .select([
+          'channel.title',
+          'channel.description',
+          'channel.publishedAt',
+          'channel.category',
+          'channel.thumbnails',
+          'video.title',
+          'video.description',
+          'video.thumbnails',
+          'video.publishedAt',
+        ])
+        .leftJoin('channel.videos', 'video')
+        .where('channel.id = :id', { id: channelId })
+        .getOneOrFail();
     } catch (error) {
       console.error(error);
       throw new NotFoundException('해당 채널이 등록되어 있지 않습니다.');

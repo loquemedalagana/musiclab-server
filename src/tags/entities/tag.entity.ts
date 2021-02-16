@@ -63,7 +63,6 @@ export class TagRepository extends AbstractRepository<Tag> {
     return tag;
   }
 
-  // 쿼리빌더 사용하기!!!
   async addTags(
     content: string,
     isOfficial: boolean,
@@ -74,7 +73,7 @@ export class TagRepository extends AbstractRepository<Tag> {
     // 여기서 나중에 중복제거 해주기!
     if (isOfficial) extractedTags.push('전인혁밴드');
     if (inputedTags) extractedTags = extractedTags.concat(inputedTags);
-    console.log('태글 추출 됨?', extractedTags);
+
     try {
       if (!extractedTags) return [];
       return Promise.all<Tag>(

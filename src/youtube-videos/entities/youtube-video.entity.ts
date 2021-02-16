@@ -59,16 +59,6 @@ export class YoutubeVideo extends YoutubeEntity {
   tags: Tag[];
 }
 
-export const getVideoDataFromPlaylistId = (data) =>
-  data
-    ? data.items.map(({ snippet, contentDetails }) => {
-        return {
-          id: contentDetails.videoId,
-          ...snippet,
-        };
-      })
-    : [];
-
 @EntityRepository(YoutubeVideo)
 export class SaveYoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
   private async findOrCreate(
@@ -128,10 +118,4 @@ export class SaveYoutubeVideoRepository extends AbstractRepository<YoutubeVideo>
       );
     }
   }
-}
-
-@EntityRepository(YoutubeVideo)
-export class GetYoutubeVideoRepository extends AbstractRepository<YoutubeVideo> {
-  // get all videos with profile image
-  // find by tags
 }
