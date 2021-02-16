@@ -1,16 +1,25 @@
-import { BadRequestException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Connection, Repository } from "typeorm";
-import axios from "axios";
-import { CONFIG_OPTIONS } from "src/common/constants/common.constants";
-import { IYoutubeFetchOptions } from "../youtube/types/youtube";
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Connection, Repository } from 'typeorm';
+import axios from 'axios';
+import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
+import { IYoutubeFetchOptions } from '../youtube/types/youtube';
 
 // entities
-import { YoutubeVideo } from "./entities/youtube-video.entity";
-import { TagRepository } from "src/tags/entities/tag.entity";
-import { YoutubeVideoInput, YoutubeVideoOutput } from "./dtos/create-youtube-video.dto";
+import { YoutubeVideo } from './entities/youtube-video.entity';
+import { TagRepository } from 'src/tags/entities/tag.entity';
+import {
+  YoutubeVideoInput,
+  YoutubeVideoOutput,
+} from './dtos/create-youtube-video.dto';
 
-import { getEndpointFromVideoId } from "src/youtube/lib/endpoints";
+import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
 
 @Injectable()
 export class YoutubeVideosService {
@@ -105,13 +114,30 @@ export class YoutubeVideosService {
 
   // 조회수 1씩 더하기 find and update 후 return 해주기
   // 태그도 같이 리턴해주기(title만), 복합쿼리 사용 (프사만 가져오기)
-  async getOne(id: string): Promise<YoutubeVideo> {
+  async getOne(videoId: string): Promise<YoutubeVideo> {
     try {
-      const video = await this.youtubeVideos.findOne(id, {
-        relations: ['tags'],
-      });
+      const video = await this.connection
+        .getRepository(YoutubeVideo)
+        .createQueryBuilder('video')
+        .select([
+          'video.id',
+          'video.title',
+          'video.description',
+          'video.thumbnails',
+          'video.publishedAt',
+          'video.visitedCount',
+          'video.category',
+          'channel.thumbnails',
+        ])
+        .leftJoin('video.channel', 'channel')
+        .where('video.id = :id', { id: videoId })
+        .getOneOrFail();
+      if (!video) {
+        throw new NotFoundException('failed to found this video!');
+      }
       video.visitedCount += 1;
-      return this.youtubeVideos.save(video);
+      await this.youtubeVideos.save(video);
+      return video;
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException(`the video couldn't be loaded`);
