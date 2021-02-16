@@ -34,12 +34,14 @@ export class YoutubeVideosService {
   ) {}
 
   // 받아온 데이터 콘솔에 출력하기!!
-  /*
-    private getYoutubeVideoData(videoId: string): Promise<any> {
-    const endpoint = getEndpointFromVideoId(videoId);
+  // DjwBsB0qnOs 요걸로 테스트해보기
+  private getYoutubeVideoData(videoId: string): Promise<any> {
+    const endpoint = getEndpointFromVideoId(
+      videoId,
+      this.options.youtubeApiKey,
+    );
     return axios.get(endpoint);
   }
-  */
 
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
@@ -70,6 +72,7 @@ export class YoutubeVideosService {
       newVideo.tags = await this.tagRepository.addTags(
         newVideo.title,
         inputYoutubeVideoData.category === 'official',
+        inputYoutubeVideoData.tags,
       );
       console.log(newVideo);
 

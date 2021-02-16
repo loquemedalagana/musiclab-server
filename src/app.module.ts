@@ -71,7 +71,9 @@ import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.enti
     }),
     ScheduleModule.forRoot(),
     YoutubeChannelsModule,
-    YoutubeVideosModule,
+    YoutubeVideosModule.forRoot({
+      youtubeApiKey: process.env.GOOGLE_API_KEY,
+    }),
     TagsModule,
   ],
   controllers: [AppController],
