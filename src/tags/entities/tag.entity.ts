@@ -23,33 +23,33 @@ export class TagRepository extends AbstractRepository<Tag> {
   private static removeSpecialCharsAndSpace(text: string): string {
     return text.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/gi, '');
   }
+
+  // 오류가 여기서 난 듯..
   private extractTags(content: string): Array<string> {
-    let tags: string[] = [];
-    albumList.forEach((album, index) => {
-      const taglist = album
-        .filter(
-          (songTitle): boolean =>
-            content.includes(songTitle) ||
-            content.includes(TagRepository.removeSpecialChars(songTitle)) ||
-            content.includes(
-              TagRepository.removeSpecialCharsAndSpace(songTitle),
-            ),
-        )
-        .map((songTitle): string =>
-          TagRepository.removeSpecialCharsAndSpace(songTitle),
-        );
-      if (taglist.length > 0) {
-        tags.push(albumTitleList[index].title.replace(/\s+/g, ''));
-        tags.push(albumTitleList[index].description.replace(/\s+/g, ''));
-        if (albumTitleList[index].etc) tags.push(albumTitleList[index].etc);
-      }
-      if (taglist.includes('약속')) tags.push('전인혁작곡');
-      if (taglist.includes('Miracle')) {
-        tags.push('GuitarSolo');
-      }
-      tags = tags.concat(taglist);
-    });
-    return tags;
+    return albumList.reduce(
+      (tags: string[], album: string[], index: number) => {
+        const taglist = album
+          .filter(
+            (title) =>
+              content.includes(title) ||
+              content.includes(TagRepository.removeSpecialChars(title)) ||
+              content.includes(TagRepository.removeSpecialCharsAndSpace(title)),
+          )
+          .map((title) => TagRepository.removeSpecialCharsAndSpace(title));
+        tags = tags.concat(taglist);
+        if (taglist.length > 0 && index < 5) {
+          tags.push(albumTitleList[index].title.replace(/\s+/g, ''));
+          tags.push(albumTitleList[index].description.replace(/\s+/g, ''));
+          if (albumTitleList[index].etc) tags.push(albumTitleList[index].etc);
+        }
+        if (taglist.includes('약속')) tags.push('전인혁작곡');
+        if (taglist.includes('Miracle')) {
+          tags.push('GuitarSolo');
+        }
+        return tags;
+      },
+      [],
+    );
   }
 
   private async findOrCreate(title: string): Promise<Tag> {
@@ -72,10 +72,9 @@ export class TagRepository extends AbstractRepository<Tag> {
     let extractedTags: string[] = this.extractTags(content);
     if (isOfficial) extractedTags.push('전인혁밴드');
     if (inputedTags) extractedTags = extractedTags.concat(inputedTags);
-
-    console.log(extractedTags);
-
+    console.log('태글 추출 됨?', extractedTags);
     try {
+      if (!extractedTags) return [];
       return Promise.all<Tag>(
         extractedTags.map((tagTitle) => this.findOrCreate(tagTitle)),
       );

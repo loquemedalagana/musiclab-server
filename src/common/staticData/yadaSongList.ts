@@ -50,13 +50,7 @@ export const JeonInhyukBandSongs: Array<string> = [
   'Miracle',
 ];
 
-export const etcTags: Array<string> = [
-  `Man's Road`,
-  '고음',
-  '샤우팅',
-  '무반주',
-  '불후의 명곡',
-];
+export const etcTags: Array<string> = [`Man's Road`, '고음', '샤우팅'];
 
 // 정규식 생성 (존재하는지?)
 export const albumList: Array<string[]> = [
