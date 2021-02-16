@@ -99,6 +99,10 @@ export class YoutubeVideosService {
           'channel.thumbnails',
         ])
         .leftJoin('video.channel', 'channel')
+        .orderBy({
+          'video.visitedCount': 'DESC',
+          'video.publishedAt': 'DESC',
+        })
         .getMany();
       return allVideos;
     } catch (error) {
