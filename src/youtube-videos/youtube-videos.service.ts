@@ -1,25 +1,16 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Connection, Repository } from 'typeorm';
-import axios from 'axios';
-import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
-import { IYoutubeFetchOptions } from '../youtube/types/youtube';
+import { BadRequestException, Inject, Injectable, InternalServerErrorException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Connection, Repository } from "typeorm";
+import axios from "axios";
+import { CONFIG_OPTIONS } from "src/common/constants/common.constants";
+import { IYoutubeFetchOptions } from "../youtube/types/youtube";
 
 // entities
-import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
-import { YoutubeVideo } from './entities/youtube-video.entity';
-import { TagRepository } from 'src/tags/entities/tag.entity';
-import {
-  YoutubeVideoInput,
-  YoutubeVideoOutput,
-} from './dtos/create-youtube-video.dto';
+import { YoutubeVideo } from "./entities/youtube-video.entity";
+import { TagRepository } from "src/tags/entities/tag.entity";
+import { YoutubeVideoInput, YoutubeVideoOutput } from "./dtos/create-youtube-video.dto";
 
-import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
+import { getEndpointFromVideoId } from "src/youtube/lib/endpoints";
 
 @Injectable()
 export class YoutubeVideosService {
@@ -85,7 +76,7 @@ export class YoutubeVideosService {
   // channelTitle, channelThumbnailImage
   async getAll(): Promise<YoutubeVideo[]> {
     try {
-      const allVideos = await this.connection
+      return await this.connection
         .getRepository(YoutubeVideo)
         .createQueryBuilder('video')
         .select([
@@ -104,7 +95,6 @@ export class YoutubeVideosService {
           'video.publishedAt': 'DESC',
         })
         .getMany();
-      return allVideos;
     } catch (error) {
       console.error(error);
       throw new InternalServerErrorException(
