@@ -47,11 +47,11 @@ export class YoutubeVideosService {
     const response = await this.getYoutubeVideoData(
       inputYoutubeVideoData.videoId,
     );
-    const fetchedVideoData = response.data;
-
-    if (!fetchedVideoData) {
+    if (!response.data) {
       throw new BadRequestException('not found video data');
     }
+    const fetchedVideoData = response.data;
+
     console.log(fetchedVideoData);
     try {
       const newVideo = new YoutubeVideo();
