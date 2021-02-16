@@ -19,8 +19,6 @@ import {
   YoutubeVideoOutput,
 } from './dtos/create-youtube-video.dto';
 
-// dummyData (더미 데이터는 나중에 옮긴다)
-import singleVideoDummyData from './sampleData/string/singleVideoDummyData';
 import { getEndpointFromVideoId } from 'src/youtube/lib/endpoints';
 
 @Injectable()
@@ -46,21 +44,18 @@ export class YoutubeVideosService {
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
   ): Promise<YoutubeVideoOutput> {
-    /*
-
-    */
-    const reg = new RegExp(inputYoutubeVideoData.videoId);
-    // 나중에 axios로 대체
-    const [fetchedVideoData] = singleVideoDummyData.filter((video) =>
-      reg.test(video),
+    const response = await this.getYoutubeVideoData(
+      inputYoutubeVideoData.videoId,
     );
+    const fetchedVideoData = response.data;
+
     if (!fetchedVideoData) {
       throw new BadRequestException('not found video data');
     }
-
+    console.log(fetchedVideoData);
     try {
       const newVideo = new YoutubeVideo();
-      const [videoRawData] = JSON.parse(fetchedVideoData).items;
+      const [videoRawData] = fetchedVideoData.items;
 
       newVideo.id = inputYoutubeVideoData.videoId;
       newVideo.category = inputYoutubeVideoData.category;
@@ -72,10 +67,9 @@ export class YoutubeVideosService {
       newVideo.tags = await this.tagRepository.addTags(
         newVideo.title,
         inputYoutubeVideoData.category === 'official',
-        inputYoutubeVideoData.tags,
+        inputYoutubeVideoData?.tags,
       );
       console.log(newVideo);
-
       await this.youtubeVideos.save(newVideo);
       return {
         ok: true,
