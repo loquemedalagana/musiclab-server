@@ -133,8 +133,6 @@ export class YoutubeVideosService {
       video.visitedCount += 1;
       await this.youtubeVideos.save(video);
 
-      // 태그에 전인혁밴드가 들어있으면 video.channel.thumbnails = 썸네일이미지 json 대입!
-
       return video;
     } catch (error) {
       console.error(error);

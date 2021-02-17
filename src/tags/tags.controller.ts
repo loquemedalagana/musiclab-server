@@ -5,6 +5,11 @@ import { TagsService } from './tags.service';
 export class TagsController {
   constructor(private readonly tagsService: TagsService) {}
 
+  @Get()
+  getAllTagTitle() {
+    return this.tagsService.getAllTags();
+  }
+
   @Get(':tagname/youtube')
   getYoutubeVideoListByTagName(@Param('tagname') tagname: string) {
     return this.tagsService.getYoutubeVideoListByTagName(tagname);
