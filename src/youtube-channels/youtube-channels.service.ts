@@ -80,6 +80,7 @@ export class YoutubeChannelsService {
           'channel.publishedAt',
           'channel.category',
           'channel.thumbnails',
+          'video.id',
           'video.title',
           'video.description',
           'video.thumbnails',

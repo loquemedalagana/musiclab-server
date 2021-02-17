@@ -85,6 +85,7 @@ export class YoutubeVideosService {
         .getRepository(YoutubeVideo)
         .createQueryBuilder('video')
         .select([
+          'video.id',
           'video.title',
           'video.description',
           'video.thumbnails',
