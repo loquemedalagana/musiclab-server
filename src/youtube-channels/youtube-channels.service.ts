@@ -75,6 +75,7 @@ export class YoutubeChannelsService {
         .getRepository(YoutubeChannel)
         .createQueryBuilder('channel')
         .select([
+          'channel.id',
           'channel.title',
           'channel.description',
           'channel.publishedAt',
