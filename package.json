@@ -40,6 +40,8 @@
     "class-transformer": "^0.3.2",
     "class-validator": "^0.13.1",
     "cross-env": "^7.0.3",
+    "helmet": "^4.4.1",
+    "hpp": "^0.2.3",
     "joi": "^17.4.0",
     "mysql2": "^2.2.5",
     "reflect-metadata": "^0.1.13",

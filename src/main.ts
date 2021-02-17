@@ -1,5 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import * as helmet from 'helmet';
+import * as hpp from 'hpp';
 import { AppModule } from './app.module';
 
 async function musiclab() {
@@ -11,6 +13,8 @@ async function musiclab() {
       origin: 'https://musicsseolprise.com',
       credentials: true,
     });
+    app.use(helmet());
+    app.use(hpp());
   } else {
     app.enableCors({
       origin: 'http://localhost:3000',
