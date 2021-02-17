@@ -84,6 +84,7 @@ export class YoutubeChannelsService {
           'video.title',
           'video.description',
           'video.thumbnails',
+          'video.channelId',
           'video.publishedAt',
         ])
         .leftJoin('channel.videos', 'video')

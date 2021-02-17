@@ -92,6 +92,7 @@ export class YoutubeVideosService {
           'video.publishedAt',
           'video.visitedCount',
           'video.category',
+          'video.channelId',
           'channel.title',
           'channel.thumbnails',
         ])
