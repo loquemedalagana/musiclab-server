@@ -13,6 +13,11 @@ export class Tag extends CoreEntity {
   @IsOptional()
   @IsString()
   thumbnail?: string;
+
+  @Column({ nullable: true })
+  @IsOptional()
+  @IsString()
+  description: string;
 }
 
 @EntityRepository(Tag)
