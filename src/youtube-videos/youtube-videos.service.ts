@@ -42,6 +42,9 @@ export class YoutubeVideosService {
   async create(
     inputYoutubeVideoData: YoutubeVideoInput,
   ): Promise<YoutubeVideoOutput> {
+    if (inputYoutubeVideoData.videoId.length !== 11) {
+      throw new BadRequestException(`videoid's length should be 11`);
+    }
     const response = await this.getYoutubeVideoData(
       inputYoutubeVideoData.videoId,
     );
