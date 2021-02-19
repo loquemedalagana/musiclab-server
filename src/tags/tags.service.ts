@@ -33,13 +33,34 @@ export class TagsService {
   }
 
   // async
-  async getYoutubeVideoListByTagName(tagname: string): Promise<YoutubeVideo[]> {
+  async getYoutubeVideoListByTagName(
+    decodedTagname: string,
+  ): Promise<YoutubeVideo[]> {
     try {
-      // 해당 태그를 가지고 있는 영상 리스트 출력 (쿼리 꽤 어려울 듯ㅠㅠ)
-      return [];
+      return await this.connection
+        .getRepository(YoutubeVideo)
+        .createQueryBuilder('video')
+        .select([
+          'video.id',
+          'video.title',
+          'video.description',
+          'video.thumbnails',
+          'video.channelId',
+          'video.publishedAt',
+          'video.visitedCount',
+        ])
+        .leftJoin('video.tags', 'tag')
+        .where('tag.title = :title', { title: decodedTagname })
+        .orderBy({
+          'video.visitedCount': 'DESC',
+          'video.publishedAt': 'DESC',
+        })
+        .getMany();
     } catch (error) {
       console.error(error);
-      throw new NotFoundException(`There is no video related with ${tagname}`);
+      throw new NotFoundException(
+        `There is no video related with ${decodedTagname}`,
+      );
     }
   }
 }

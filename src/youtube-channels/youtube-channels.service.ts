@@ -90,6 +90,10 @@ export class YoutubeChannelsService {
         ])
         .leftJoin('channel.videos', 'video')
         .where('channel.id = :id', { id: channelId })
+        .orderBy({
+          'video.visitedCount': 'DESC',
+          'video.publishedAt': 'DESC',
+        })
         .getOneOrFail();
     } catch (error) {
       console.error(error);

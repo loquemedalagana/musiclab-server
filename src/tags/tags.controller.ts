@@ -12,6 +12,8 @@ export class TagsController {
 
   @Get(':tagname/youtube')
   getYoutubeVideoListByTagName(@Param('tagname') tagname: string) {
-    return this.tagsService.getYoutubeVideoListByTagName(tagname);
+    return this.tagsService.getYoutubeVideoListByTagName(
+      decodeURIComponent(tagname),
+    );
   }
 }
