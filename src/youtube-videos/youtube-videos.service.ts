@@ -113,6 +113,37 @@ export class YoutubeVideosService {
     }
   }
 
+  async getOfficialBestVideos(): Promise<YoutubeVideo[]> {
+    try {
+      return await this.connection
+        .getRepository(YoutubeVideo)
+        .createQueryBuilder('video')
+        .select([
+          'video.id',
+          'video.title',
+          'video.description',
+          'video.thumbnails',
+          'video.publishedAt',
+          'video.visitedCount',
+          'video.category',
+        ])
+        .where({
+          category: 'official',
+        })
+        .orderBy({
+          'video.visitedCount': 'DESC',
+          'video.publishedAt': 'DESC',
+        })
+        .limit(6)
+        .getMany();
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException(
+        `couldn't load all video data due to server error`,
+      );
+    }
+  }
+
   // 태그 찾기
   async getOne(videoId: string): Promise<YoutubeVideo> {
     try {

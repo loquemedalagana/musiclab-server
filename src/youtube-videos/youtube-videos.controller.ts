@@ -12,6 +12,11 @@ export class YoutubeVideosController {
     return this.youtubeVideosService.getAll();
   }
 
+  @Get('best/official')
+  getOfficialBestVideos() {
+    return this.youtubeVideosService.getOfficialBestVideos();
+  }
+
   @Get(':id')
   getOne(@Param('id') videoId: string) {
     return this.youtubeVideosService.getOne(videoId);
