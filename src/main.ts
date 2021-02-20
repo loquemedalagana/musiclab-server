@@ -1,14 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import * as helmet from 'helmet';
 import * as hpp from 'hpp';
 import { AppModule } from './app.module';
 
 async function musiclab() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
   if (process.env.NODE_ENV === 'production') {
+    app.enable('trust proxy');
     app.enableCors({
       origin: 'https://musicsseolprise.com',
       credentials: true,

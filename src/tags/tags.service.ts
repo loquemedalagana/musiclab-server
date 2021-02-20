@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
 import { Tag } from './entities/tag.entity';
+import { TagOutputDto } from "./dtos/tag.output.dto";
 
 @Injectable()
 export class TagsService {
@@ -48,6 +49,7 @@ export class TagsService {
           'video.channelId',
           'video.publishedAt',
           'video.visitedCount',
+          'video.tags',
         ])
         .leftJoin('video.tags', 'tag')
         .where('tag.title = :title', { title: decodedTagname })
@@ -64,65 +66,3 @@ export class TagsService {
     }
   }
 }
-
-/*
-
-router.get("/load", async (req, res, next) => {
-  // 쿼리로 유저의 지역 추가
-  try {
-    // 모든 태그 검출하기
-    const tagList = await Tag.findAll({
-      attributes: ["title"],
-    });
-    if (!tagList) return res.json([]);
-    return res.json(tagList);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-// all, youtube, post etc
-router.get("/:tagname/youtube", async (req, res, next) => {
-  const tagName = decodeURIComponent(req.params.tagname);
-  const isOfficial = tagName === "전인혁밴드" || tagName === "jeoninhyukband";
-  try {
-    let where = {};
-    let whereTag = {};
-    if (isOfficial) {
-      where = {
-        channelId: "UChNtl7wRLF6x4B4fp7KCyhQ",
-      };
-      whereTag = {
-        [Op.or]: [{ title: "전인혁밴드" }, { title: "jeoninhyukband" }],
-      };
-    } else {
-      whereTag = {
-        title: tagName,
-      };
-    }
-
-    const youtubeVideoList = await YoutubeVideo.findAll({
-      //where,
-      order: [
-        ["publishedAt", "DESC"],
-        ["title", "ASC"],
-      ],
-      include: [
-        {
-          model: Tag,
-          as: "Tags",
-          //required: !isOfficial,
-          where: whereTag,
-          attributes: ["title"],
-        },
-      ],
-    });
-    res.json(youtubeVideoList);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-*/
