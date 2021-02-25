@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { YoutubeVideosService } from './youtube-videos.service';
 import { YoutubeVideoInput } from './dtos/create-youtube-video.dto';
 
@@ -8,8 +8,8 @@ export class YoutubeVideosController {
 
   // pagination???
   @Get()
-  getAll() {
-    return this.youtubeVideosService.getAll();
+  getAll(@Query('perPage') perPage: string, @Query('page') page: string) {
+    return this.youtubeVideosService.getAll(+perPage, +page);
   }
 
   @Get('best/official')

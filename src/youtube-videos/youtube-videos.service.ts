@@ -82,7 +82,8 @@ export class YoutubeVideosService {
     }
   }
 
-  async getAll(): Promise<YoutubeVideo[]> {
+  async getAll(perPage: number, page: number): Promise<YoutubeVideo[]> {
+    console.log(`perpage is ${perPage} page is ${page}`);
     try {
       return await this.connection
         .getRepository(YoutubeVideo)
@@ -104,6 +105,8 @@ export class YoutubeVideosService {
           'video.visitedCount': 'DESC',
           'video.publishedAt': 'DESC',
         })
+        .take(perPage)
+        .skip(perPage * (page - 1))
         .getMany();
     } catch (error) {
       console.error(error);
