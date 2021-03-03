@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import * as Joi from 'joi';
 // modules
 import { ConfigModule } from '@nestjs/config';
@@ -13,6 +13,8 @@ import { TagsModule } from './tags/tags.module';
 import { Tag } from './tags/entities/tag.entity';
 import { YoutubeVideo } from './youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.entity';
+// middlewares
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -79,4 +81,8 @@ import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.enti
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
