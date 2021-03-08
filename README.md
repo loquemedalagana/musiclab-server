@@ -11,6 +11,7 @@
 2. /mail
    
 3. /users
+/profiles
 
 4. /youtube -> 모두 접근 가능
     - channels

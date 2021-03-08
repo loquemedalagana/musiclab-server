@@ -15,6 +15,10 @@ import { YoutubeVideo } from './youtube-videos/entities/youtube-video.entity';
 import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.entity';
 // middlewares
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { MailModule } from './mail/mail.module';
+import { UsersModule } from './users/users.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -77,6 +81,14 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
       youtubeApiKey: process.env.GOOGLE_API_KEY,
     }),
     TagsModule,
+    MailModule.forRoot({
+      apiKey: process.env.MAILGUN_API_KEY,
+      domain: process.env.MAILGUN_DOMAIN_NAME,
+      fromEmail: process.env.MAILGUN_FROM_EMAIL,
+    }),
+    UsersModule,
+    NotificationsModule,
+    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
