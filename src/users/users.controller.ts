@@ -30,15 +30,15 @@ export class UsersController {
   @Post('logout')
   logout() {}
 
-  @ApiOperation({ summary: `local register request` })
-  @Post('register')
+  @ApiOperation({ summary: `local create account request` })
+  @Post()
   register() {}
 
   @ApiOperation({ summary: `local register request` })
-  @Post('register/email')
+  @Post('add/email')
   addEmail() {}
 
-  @ApiOperation({ summary: `add an user's personal info` })
-  @Post('register/information')
+  @ApiOperation({ summary: `add an user's personal profile` })
+  @Post('add/profile')
   addPersonalInfo() {}
 }
