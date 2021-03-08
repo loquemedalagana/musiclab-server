@@ -16,7 +16,7 @@ export class YoutubeVideosController {
   }
 
   @ApiOperation({
-    summary: 'get all youtube official videos for main page carousel',
+    summary: 'get best youtube official videos for main page carousel',
   })
   @Get('best/official')
   getOfficialBestVideos() {
