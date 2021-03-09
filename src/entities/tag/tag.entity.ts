@@ -1,5 +1,5 @@
 import { Column, Entity, EntityRepository, AbstractRepository } from 'typeorm';
-import { TagCoreEntity } from 'src/common/entities/tag.core.entity';
+import { TagCoreEntity } from 'src/entities/core/tag.core.entity';
 import { IsOptional, IsString } from 'class-validator';
 import {
   albumList,

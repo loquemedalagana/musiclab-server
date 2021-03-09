@@ -1,5 +1,5 @@
 import { Column, Entity, BeforeInsert } from 'typeorm';
-import { CoreEntity } from 'src/common/entities/core.entity';
+import { CoreEntity } from 'src/entities/core/core.entity';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()

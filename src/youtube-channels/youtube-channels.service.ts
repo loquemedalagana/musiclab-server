@@ -6,9 +6,9 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { SaveYoutubeVideoRepository } from 'src/youtube-videos/entities/youtube-video.entity';
-import { YoutubeChannel } from './entities/youtube-channel.entity';
-import { TagRepository } from 'src/tags/entities/tag.entity';
+import { SaveYoutubeVideoRepository } from 'src/entities/youtube/youtube-video.entity';
+import { YoutubeChannel } from 'src/entities/youtube/youtube-channel.entity';
+import { TagRepository } from 'src/entities/tag/tag.entity';
 import {
   YoutubeChannelInput,
   YoutubeChannelOutput,

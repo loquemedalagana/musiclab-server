@@ -12,8 +12,8 @@ import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
 import { IYoutubeFetchOptions } from '../youtube/types/youtube';
 
 // entities
-import { YoutubeVideo } from './entities/youtube-video.entity';
-import { TagRepository } from 'src/tags/entities/tag.entity';
+import { YoutubeVideo } from 'src/entities/youtube/youtube-video.entity';
+import { TagRepository } from 'src/entities/tag/tag.entity';
 import {
   YoutubeVideoInput,
   YoutubeVideoOutput,

@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { YoutubeVideo } from '../youtube-videos/entities/youtube-video.entity';
-import { Tag } from './entities/tag.entity';
+import { YoutubeVideo } from '../entities/youtube/youtube-video.entity';
+import { Tag } from '../entities/tag/tag.entity';
 import { TagOutputDto } from "./dtos/tag.output.dto";
 
 @Injectable()

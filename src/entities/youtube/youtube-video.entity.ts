@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 import {
   YoutubeCategory,
-  YoutubeEntity,
-} from 'src/youtube/entities/youtube.entity';
-import { YoutubeChannel } from 'src/youtube-channels/entities/youtube-channel.entity';
-import { Tag, TagRepository } from 'src/tags/entities/tag.entity';
+  YoutubeCoreEntity,
+} from 'src/entities/core/youtube.core.entity';
+import { YoutubeChannel } from 'src/entities/youtube/youtube-channel.entity';
+import { Tag, TagRepository } from 'src/entities/tag/tag.entity';
 
 // changed to axios
 import { getChannelVideoList } from 'src/youtube/lib/endpoints';
@@ -44,7 +44,7 @@ export type DownLoadedYoutubeVideoData = {
 };
 
 @Entity()
-export class YoutubeVideo extends YoutubeEntity {
+export class YoutubeVideo extends YoutubeCoreEntity {
   @Column({ type: 'int', default: 0 })
   visitedCount: number;
 

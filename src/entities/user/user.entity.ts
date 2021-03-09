@@ -6,14 +6,15 @@ import {
   AbstractRepository,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { CoreEntity } from 'src/common/entities/core.entity';
+import { CoreEntity } from 'src/entities/core/core.entity';
 import { Profile } from './profile.entity';
 import { Role } from './role.entity';
 import { Social } from './social.entity';
-import { Notification } from 'src/notifications/entities/notification.entity';
+import { Notification } from 'src/entities/notification/notification.entity';
 
 @Entity()
 export class User extends CoreEntity {
@@ -44,7 +45,7 @@ export class User extends CoreEntity {
   @Column('varchar', { nullable: true, length: 300 })
   thumbnail: string;
 
-  // relations
+  // relations 1:1
   @OneToOne(() => Profile, (profile) => profile.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
@@ -65,6 +66,19 @@ export class User extends CoreEntity {
   })
   @JoinColumn()
   social: Social;
+
+  // relations 1:N
+  @OneToMany(() => Notification, (notification) => notification.sender, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  sent_notifications: Notification[];
+
+  @OneToMany(() => Notification, (notification) => notification.receiver, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  received_notifications: Notification[];
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -92,5 +106,7 @@ export class User extends CoreEntity {
 
 export class UserRepository extends AbstractRepository<User> {
   // find or create
+  // 소셜일 때 저장하는 방법
   // 중복 확인
+  // 점수 올리기
 }

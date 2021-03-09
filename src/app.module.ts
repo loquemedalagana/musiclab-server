@@ -10,9 +10,9 @@ import { YoutubeChannelsModule } from './youtube-channels/youtube-channels.modul
 import { YoutubeVideosModule } from './youtube-videos/youtube-videos.module';
 import { TagsModule } from './tags/tags.module';
 // entities
-import { Tag } from './tags/entities/tag.entity';
-import { YoutubeVideo } from './youtube-videos/entities/youtube-video.entity';
-import { YoutubeChannel } from './youtube-channels/entities/youtube-channel.entity';
+import { Tag } from './entities/tag/tag.entity';
+import { YoutubeVideo } from './entities/youtube/youtube-video.entity';
+import { YoutubeChannel } from './entities/youtube/youtube-channel.entity';
 // middlewares
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { MailModule } from './mail/mail.module';

@@ -1,4 +1,4 @@
-import { DownLoadedYoutubeVideoData } from 'src/youtube-videos/entities/youtube-video.entity';
+import { DownLoadedYoutubeVideoData } from 'src/entities/youtube/youtube-video.entity';
 
 const staticVideoData: Array<DownLoadedYoutubeVideoData> = [
   {

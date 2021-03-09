@@ -1,5 +1,5 @@
 import { IsEnum, IsString } from 'class-validator';
-import { YoutubeCategory } from 'src/youtube/entities/youtube.entity';
+import { YoutubeCategory } from 'src/entities/core/youtube.core.entity';
 import { CoreOutput } from 'src/common/dtos/output.dto';
 
 // data type of a request body

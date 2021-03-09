@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { YoutubeChannelsService } from './youtube-channels.service';
 import { YoutubeChannelsController } from './youtube-channels.controller';
-import { YoutubeChannel } from './entities/youtube-channel.entity';
+import { YoutubeChannel } from 'src/entities/youtube/youtube-channel.entity';
 import {
   SaveYoutubeVideoRepository,
   YoutubeVideo,
-} from 'src/youtube-videos/entities/youtube-video.entity';
-import { TagRepository } from 'src/tags/entities/tag.entity';
+} from 'src/entities/youtube/youtube-video.entity';
+import { TagRepository } from 'src/entities/tag/tag.entity';
 
 @Module({
   imports: [

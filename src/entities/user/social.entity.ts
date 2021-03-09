@@ -1,5 +1,5 @@
 import { Column, Entity, OneToOne } from 'typeorm';
-import { CoreEntity } from 'src/common/entities/core.entity';
+import { CoreEntity } from 'src/entities/core/core.entity';
 import { User } from './user.entity';
 
 @Entity()
