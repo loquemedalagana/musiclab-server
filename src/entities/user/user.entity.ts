@@ -4,6 +4,7 @@ import {
   OneToOne,
   JoinColumn,
   AbstractRepository,
+  EntityRepository,
   BeforeInsert,
   BeforeUpdate,
   OneToMany,
@@ -106,8 +107,16 @@ export class User extends CoreEntity {
   }
 }
 
+@EntityRepository(User)
 export class UserRepository extends AbstractRepository<User> {
-  // find or create
+  async findByEmail(email: string) {
+    return await this.manager.findOne(User, {
+      where: { email },
+      select: ['id', 'email', 'password'],
+    });
+  }
+
+  async findByDisplayName(displayName: string) {}
   // 소셜일 때 저장하는 방법
   // 중복 확인
   // 점수 올리기

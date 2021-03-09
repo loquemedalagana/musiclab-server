@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersController } from './users.controller';
 
-import { User } from 'src/entities/user/user.entity';
+import { User, UserRepository } from 'src/entities/user/user.entity';
 import { PublicProfile } from 'src/entities/user/public.profile.entity';
 import { PrivateProfile } from 'src/entities/user/private.profile.entity';
 import { Role } from 'src/entities/user/role.entity';
@@ -13,6 +13,7 @@ import { UsersService } from './users.service';
   imports: [
     TypeOrmModule.forFeature([
       User,
+      UserRepository,
       Role,
       PrivateProfile,
       PublicProfile,

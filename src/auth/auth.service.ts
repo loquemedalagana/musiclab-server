@@ -1,14 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import * as bcrypt from 'bcrypt';
-
+import { UserRepository } from 'src/entities/user/user.entity';
 
 @Injectable()
 export class AuthService {
-  // validate user
+  constructor(private readonly userRepository: UserRepository) {}
 
-  // google
+  async validateUser(email: string, password: string) {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      return null;
+    }
 
-  // facebook
+    const result = await user.checkPassword(password);
 
-  // kakao
+    if (result) {
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword;
+    }
+
+    return null;
+  }
 }
