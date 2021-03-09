@@ -1,5 +1,5 @@
 import { Column, Entity, EntityRepository, AbstractRepository } from 'typeorm';
-import { CoreEntity } from 'src/common/entities/core.entity';
+import { TagCoreEntity } from 'src/common/entities/tag.core.entity';
 import { IsOptional, IsString } from 'class-validator';
 import {
   albumList,
@@ -8,7 +8,7 @@ import {
 import { InternalServerErrorException } from '@nestjs/common';
 
 @Entity()
-export class Tag extends CoreEntity {
+export class Tag extends TagCoreEntity {
   @Column({ nullable: true })
   @IsOptional()
   @IsString()

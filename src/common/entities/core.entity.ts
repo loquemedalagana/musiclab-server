@@ -1,25 +1,25 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 export abstract class CoreEntity {
-  @PrimaryGeneratedColumn({ type: 'int' })
-  id: number;
-
-  @Column()
-  title: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @CreateDateColumn()
-  publishedAt: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date | null;
 }
 
-// post, feedback
 export abstract class PostCoreEntity extends CoreEntity {
   @Column({ type: 'text' })
   description: string;

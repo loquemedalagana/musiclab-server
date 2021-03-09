@@ -1,19 +1,9 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  AbstractRepository,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToOne, AbstractRepository } from 'typeorm';
+import { PostCoreEntity } from 'src/common/entities/core.entity';
 import { User } from './user.entity';
 
 @Entity()
-export class Profile {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Profile extends PostCoreEntity {
   @Column()
   familyName: string;
 
@@ -22,15 +12,6 @@ export class Profile {
 
   @Column({ type: 'date' })
   birthday: Date;
-
-  @Column({ type: 'text' })
-  description: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @OneToOne(() => User, (user) => user.profile, {
     onDelete: 'SET NULL',

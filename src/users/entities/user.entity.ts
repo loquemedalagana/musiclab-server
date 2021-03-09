@@ -1,10 +1,6 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
   OneToOne,
   JoinColumn,
   AbstractRepository,
@@ -13,14 +9,14 @@ import {
 } from 'typeorm';
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { CoreEntity } from 'src/common/entities/core.entity';
 import { Profile } from './profile.entity';
 import { Role } from './role.entity';
+import { Social } from './social.entity';
+import { Notification } from 'src/notifications/entities/notification.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends CoreEntity {
   @Column('varchar', { name: 'email', nullable: true, length: 30 })
   email: string;
 
@@ -42,21 +38,13 @@ export class User {
   @Column('int', { default: -1 })
   points: number;
 
-  @Column('varchar', { nullable: true, length: 200 })
+  @Column('varchar', { nullable: true, length: 300 })
   image: string;
 
-  @Column('varchar', { nullable: true, length: 200 })
+  @Column('varchar', { nullable: true, length: 300 })
   thumbnail: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date | null;
-
+  // relations
   @OneToOne(() => Profile, (profile) => profile.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
@@ -70,6 +58,13 @@ export class User {
   })
   @JoinColumn()
   role: Role;
+
+  @OneToOne(() => Social, (social) => social.user, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
+  social: Social;
 
   @BeforeInsert()
   @BeforeUpdate()

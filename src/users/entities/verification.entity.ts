@@ -1,26 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  BeforeInsert,
-} from 'typeorm';
+import { Column, Entity, BeforeInsert } from 'typeorm';
+import { CoreEntity } from 'src/common/entities/core.entity';
 import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
-export class Verification {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Verification extends CoreEntity {
   @Column()
   code: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @BeforeInsert()
   createCode(): void {
