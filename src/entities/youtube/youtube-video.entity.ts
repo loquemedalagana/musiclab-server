@@ -57,6 +57,8 @@ export class YoutubeVideo extends YoutubeCoreEntity {
   @ManyToMany(() => Tag)
   @JoinTable()
   tags: Tag[];
+
+  // 피드백 연결 부분 (1:N)
 }
 
 @EntityRepository(YoutubeVideo)

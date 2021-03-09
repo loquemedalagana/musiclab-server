@@ -60,12 +60,15 @@ export class User extends CoreEntity {
   @JoinColumn()
   role: Role;
 
+  // social
+  /*
   @OneToOne(() => Social, (social) => social.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   @JoinColumn()
   social: Social;
+  * */
 
   // relations 1:N
   /*
@@ -82,6 +85,8 @@ export class User extends CoreEntity {
   received_notifications: Notification[];
   * */
 
+  // 좋아요 목록
+
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword(): Promise<void> {
@@ -97,8 +102,7 @@ export class User extends CoreEntity {
 
   async checkPassword(aPassword: string): Promise<boolean> {
     try {
-      const ok = await bcrypt.compare(aPassword, this.password);
-      return ok;
+      return await bcrypt.compare(aPassword, this.password);
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException();

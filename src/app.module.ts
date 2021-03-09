@@ -13,12 +13,18 @@ import { TagsModule } from './tags/tags.module';
 import { Tag } from './entities/tag/tag.entity';
 import { YoutubeVideo } from './entities/youtube/youtube-video.entity';
 import { YoutubeChannel } from './entities/youtube/youtube-channel.entity';
+import { User } from './entities/user/user.entity';
+import { Role } from './entities/user/role.entity';
+import { Verification } from './entities/user/verification.entity';
+import { Profile } from './entities/user/profile.entity';
+
 // middlewares
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { MailModule } from './mail/mail.module';
 import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -72,8 +78,17 @@ import { UploadsModule } from './uploads/uploads.module';
       logging:
         process.env.NODE_ENV !== 'production' &&
         process.env.NODE_ENV !== 'test',
-      entities: [Tag, YoutubeVideo, YoutubeChannel],
+      entities: [
+        Tag,
+        YoutubeVideo,
+        YoutubeChannel,
+        User,
+        Role,
+        Verification,
+        Profile,
+      ],
       autoLoadEntities: true,
+      charset: 'utf8mb4',
     }),
     ScheduleModule.forRoot(),
     YoutubeChannelsModule,
@@ -89,6 +104,7 @@ import { UploadsModule } from './uploads/uploads.module';
     UsersModule,
     NotificationsModule,
     UploadsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

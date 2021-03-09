@@ -12,8 +12,11 @@ export class Role {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('enum', { name: 'category', enum: ['Inhyuk', 'admin', 'developer'] })
-  category: 'Inhyuk' | 'admin' | 'developer';
+  @Column('enum', {
+    name: 'category',
+    enum: ['Inhyuk', 'admin', 'developer', 'artist'],
+  })
+  category: 'Inhyuk' | 'admin' | 'developer' | 'artist';
 
   @OneToOne(() => User, (user) => user.role, {
     onDelete: 'SET NULL',
