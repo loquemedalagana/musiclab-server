@@ -36,6 +36,7 @@ export class Notification {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
+  /*
   @ManyToOne(() => User, (user) => user.sent_notifications, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
@@ -53,8 +54,10 @@ export class Notification {
 
   @RelationId((notification: Notification) => notification.receiver)
   receiverId: string;
+  * */
 
   // one to one
+  /*
   @OneToOne(
     () => YoutubeChannel,
     (youtube_channel) => youtube_channel.notification,
@@ -64,6 +67,7 @@ export class Notification {
     },
   )
   youtube_channel: YoutubeChannel;
+  * */
 }
 
 export class NotificationRepository extends AbstractRepository<Notification> {

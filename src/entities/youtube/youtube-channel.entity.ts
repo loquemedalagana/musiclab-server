@@ -11,6 +11,8 @@ export class YoutubeChannel extends YoutubeCoreEntity {
   @OneToMany(() => YoutubeVideo, (video) => video.channel)
   videos: YoutubeVideo[];
 
+  /*
   @OneToOne(() => Notification, (notification) => notification.youtube_channel)
   notification: Notification;
+  * */
 }

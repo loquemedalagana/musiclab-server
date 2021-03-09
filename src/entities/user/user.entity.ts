@@ -68,6 +68,7 @@ export class User extends CoreEntity {
   social: Social;
 
   // relations 1:N
+  /*
   @OneToMany(() => Notification, (notification) => notification.sender, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
@@ -79,6 +80,7 @@ export class User extends CoreEntity {
     onUpdate: 'CASCADE',
   })
   received_notifications: Notification[];
+  * */
 
   @BeforeInsert()
   @BeforeUpdate()
