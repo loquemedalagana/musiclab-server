@@ -11,7 +11,7 @@ import {
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CoreEntity } from 'src/entities/core/core.entity';
-import { Profile } from './profile.entity';
+import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
 import { Social } from './social.entity';
 import { Notification } from 'src/entities/notification/notification.entity';
@@ -45,13 +45,16 @@ export class User extends CoreEntity {
   @Column('varchar', { nullable: true, length: 300 })
   thumbnail: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
   // relations 1:1
-  @OneToOne(() => Profile, (profile) => profile.user, {
+  @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   @JoinColumn()
-  profile: Profile;
+  private_profile: PrivateProfile;
 
   @OneToOne(() => Role, (role) => role.user, {
     onDelete: 'SET NULL',

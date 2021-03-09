@@ -1,9 +1,15 @@
-import { Column, Entity, OneToOne, AbstractRepository } from 'typeorm';
-import { PostCoreEntity } from 'src/entities/core/core.entity';
+import {
+  Column,
+  Entity,
+  OneToOne,
+  AbstractRepository,
+  RelationId,
+} from 'typeorm';
+import { CoreEntity } from 'src/entities/core/core.entity';
 import { User } from './user.entity';
 
 @Entity()
-export class Profile extends PostCoreEntity {
+export class PrivateProfile extends CoreEntity {
   @Column()
   familyName: string;
 
@@ -21,6 +27,9 @@ export class Profile extends PostCoreEntity {
     onUpdate: 'CASCADE',
   })
   user: User;
+
+  @RelationId((profile: PrivateProfile) => profile.user)
+  userId: string;
 }
 
-export class ProfileRepository extends AbstractRepository<Profile> {}
+export class ProfileRepository extends AbstractRepository<PrivateProfile> {}

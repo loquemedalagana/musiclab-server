@@ -3,6 +3,8 @@ import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
+import { LocalSerializer } from './local.serializer';
+
 import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 
@@ -17,6 +19,6 @@ import { Role } from 'src/entities/user/role.entity';
     UsersModule,
     TypeOrmModule.forFeature([User, Role]),
   ],
-  providers: [AuthService],
+  providers: [AuthService, LocalSerializer],
 })
 export class AuthModule {}

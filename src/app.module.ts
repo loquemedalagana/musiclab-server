@@ -16,7 +16,7 @@ import { YoutubeChannel } from './entities/youtube/youtube-channel.entity';
 import { User } from './entities/user/user.entity';
 import { Role } from './entities/user/role.entity';
 import { Verification } from './entities/user/verification.entity';
-import { Profile } from './entities/user/profile.entity';
+import { Profile } from './entities/user/private.profile.entity';
 
 // middlewares
 import { LoggerMiddleware } from './middlewares/logger.middleware';

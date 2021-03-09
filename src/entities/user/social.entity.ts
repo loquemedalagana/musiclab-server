@@ -22,9 +22,12 @@ export class Social extends CoreEntity {
   @Column('varchar', { nullable: true, length: 300 })
   soundcloud: string;
 
+  /*
   @OneToOne(() => User, (user) => user.social, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
   user: User;
+  // 외래키
+  * */
 }

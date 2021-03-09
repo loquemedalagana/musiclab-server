@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   AbstractRepository,
   OneToOne,
+  RelationId,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -23,6 +24,8 @@ export class Role {
     onUpdate: 'CASCADE',
   })
   user: User;
+  @RelationId((role: Role) => role.user)
+  userId: string;
 }
 
 export class RoleRepository extends AbstractRepository<Role> {
