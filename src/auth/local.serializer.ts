@@ -11,6 +11,7 @@ import { Role } from 'src/entities/user/role.entity';
 export class LocalSerializer extends PassportSerializer {
   // constructer
   constructor(
+    private readonly authService: AuthService,
     @InjectRepository(User) private users: Repository<User>,
     @InjectRepository(Role) private role: Repository<Role>,
     private readonly connection: Connection,
@@ -28,8 +29,17 @@ export class LocalSerializer extends PassportSerializer {
     return await this.connection
       .getRepository(User)
       .createQueryBuilder('user')
-      .select(['user.id', 'user.displayName', 'user.email', 'role.category'])
+      .select([
+        'user.id',
+        'user.displayName',
+        'user.email',
+        'role.category',
+        'public_profile.image',
+        'public_profile.thumbnail',
+      ])
       .leftJoin('user.role', 'role')
+      .where('user.id = :id', { id: userId })
+      .leftJoin('user.public_profile', 'public_profile')
       .where('user.id = :id', { id: userId })
       .getOneOrFail()
       .then((user) => {

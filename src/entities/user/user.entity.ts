@@ -11,6 +11,7 @@ import {
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CoreEntity } from 'src/entities/core/core.entity';
+import { PublicProfile } from './public.profile.entity';
 import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
 import { Social } from './social.entity';
@@ -21,7 +22,7 @@ export class User extends CoreEntity {
   @Column('varchar', { name: 'email', nullable: true, length: 30 })
   email: string;
 
-  @Column('varchar', { name: 'displayName', nullable: true, length: 30 })
+  @Column('varchar', { name: 'displayName', length: 30 })
   displayName: string;
 
   @Column('varchar', { name: 'password', length: 100, select: false })
@@ -33,22 +34,14 @@ export class User extends CoreEntity {
   @Column('varchar', { name: 'provider', default: 'local', length: 30 })
   provider: string;
 
-  @Column('varchar', { length: 15, default: 'en' })
-  locale: string;
-
-  @Column('int', { default: -1 })
-  points: number;
-
-  @Column('varchar', { nullable: true, length: 300 })
-  image: string;
-
-  @Column('varchar', { nullable: true, length: 300 })
-  thumbnail: string;
-
-  @Column({ type: 'text', nullable: true })
-  description: string;
-
   // relations 1:1
+  @OneToOne(() => PublicProfile, (public_profile) => public_profile.user, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
+  public_profile: PublicProfile;
+
   @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
