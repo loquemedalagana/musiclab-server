@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  OneToOne,
-  AbstractRepository,
-  RelationId,
-} from 'typeorm';
+import { Column, Entity, OneToOne, RelationId } from 'typeorm';
 import { CoreEntity } from 'src/entities/core/core.entity';
 import { User } from './user.entity';
 
@@ -31,5 +25,3 @@ export class PrivateProfile extends CoreEntity {
   @RelationId((private_profile: PrivateProfile) => private_profile.user)
   userId: string;
 }
-
-export class PrivateProfileRepository extends AbstractRepository<PrivateProfile> {}

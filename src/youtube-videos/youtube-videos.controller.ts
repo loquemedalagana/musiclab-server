@@ -29,6 +29,7 @@ export class YoutubeVideosController {
     return this.youtubeVideosService.getOne(videoId);
   }
 
+  // guard should be added
   @ApiOperation({ summary: 'add a youtube video' })
   @Post()
   create(@Body() videoData: YoutubeVideoInput) {

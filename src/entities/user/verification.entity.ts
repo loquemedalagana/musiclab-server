@@ -11,6 +11,8 @@ export class Verification extends CoreEntity {
   createCode(): void {
     this.code = uuidv4();
   }
-  
+
   // 외래키
 }
+
+// abstract class
