@@ -102,7 +102,7 @@ export class User extends CoreEntity {
   async hashPassword(): Promise<void> {
     if (this.password) {
       try {
-        this.password = await bcrypt.hash(this.password, 10);
+        this.password = await bcrypt.hash(this.password, 12);
       } catch (e) {
         console.log(e);
         throw new InternalServerErrorException();
@@ -122,6 +122,10 @@ export class User extends CoreEntity {
 
 @EntityRepository(User)
 export class UserRepository extends AbstractRepository<User> {
+  async hashedPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 12);
+  }
+
   async findByEmail(email: string) {
     return await this.manager.findOne(User, {
       where: { email },
@@ -149,7 +153,7 @@ export class UserRepository extends AbstractRepository<User> {
   async findByToken(token: string): Promise<User> {
     const userByToken = await this.getRepositoryFor(Verification)
       .createQueryBuilder('verification')
-      .select(['verification.token', 'user.id', 'user.email', 'user.password'])
+      .select(['verification.token', 'user.id', 'user.email'])
       .where('verification.token = :token', { token })
       .innerJoin('user.verification', 'user')
       .getOneOrFail();

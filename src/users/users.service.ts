@@ -17,11 +17,11 @@ import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private users: Repository<User>,
+    @InjectRepository(User) private readonly users: Repository<User>,
     @InjectRepository(Verification)
-    private verifications: Repository<Verification>, // mail service
-    private userRepository: UserRepository,
-    private verificationRepository: VerificationRepository,
+    private readonly verifications: Repository<Verification>, // mail service
+    private readonly userRepository: UserRepository,
+    private readonly verificationRepository: VerificationRepository,
     private readonly connection: Connection,
   ) {}
 
@@ -66,13 +66,13 @@ export class UsersService {
     }
 
     try {
-      const newAccount = await this.users.save(
-        this.users.create({
-          email,
-          displayName,
-          password,
-        }),
-      );
+      const newAccount = new User();
+      newAccount.email = email;
+      newAccount.password = password;
+      newAccount.displayName = displayName;
+      await newAccount.hashPassword();
+      console.log(newAccount);
+      await this.users.save(newAccount);
 
       const oldVerification = await this.verificationRepository.findExistingToken(
         email,
@@ -87,7 +87,6 @@ export class UsersService {
         }),
       );
 
-      console.log(newAccount);
       this.sendVerificationEmail(newAccount.email, newVerification.token);
 
       return true;
