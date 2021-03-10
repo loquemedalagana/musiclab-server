@@ -11,12 +11,18 @@ import {
 } from 'typeorm';
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+
+// entities
 import { CoreEntity } from 'src/entities/core/core.entity';
 import { PublicProfile } from './public.profile.entity';
 import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
 import { Social } from './social.entity';
 import { Notification } from 'src/entities/notification/notification.entity';
+import { Verification } from './verification.entity';
+
+// dtos
+import { UpdateAccountDto } from 'src/users/dtos/update-account.dto';
 
 @Entity()
 export class User extends CoreEntity {
@@ -56,6 +62,13 @@ export class User extends CoreEntity {
   })
   @JoinColumn()
   role: Role;
+
+  @OneToOne(() => Verification, (verification) => verification.user, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn()
+  verification: Verification;
 
   // social
   /*
@@ -116,8 +129,10 @@ export class UserRepository extends AbstractRepository<User> {
     });
   }
 
-  async findByDisplayName(displayName: string) {}
-  // 소셜일 때 저장하는 방법
-  // 중복 확인
-  // 점수 올리기
+  async findByDisplayName(displayName: string) {
+    return await this.manager.findOne(User, {
+      where: { displayName },
+      select: ['id', 'email', 'password'],
+    });
+  }
 }

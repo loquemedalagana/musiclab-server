@@ -1,4 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { CONFIG_OPTIONS } from 'src/common/constants/common.constants';
+import { EmailVar, MailModuleOptions } from './mail.interface';
 
 @Injectable()
-export class MailService {}
+export class MailService {
+  constructor(
+    @Inject(CONFIG_OPTIONS) private readonly options: MailModuleOptions,
+  ) {}
+
+  sendVerificationEmail(email: string, code: string) {}
+
+  sendFindPasswordEmail(email: string, code: string) {}
+
+  sendGuideDocumentEmail(email: string) {}
+
+  sendNotificationEmail(email: string) {}
+}

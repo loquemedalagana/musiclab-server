@@ -1,32 +1,40 @@
 /* eslint-disable-next-line @typescript-eslint/no-empty-function */
 import {
+  Body,
   Controller,
   Get,
   Post,
-  UseGuards,
   Response,
-  Body,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UsersService } from './users.service';
 
 // guards and decorator
 import { UserDecorator } from 'src/decorators/user.decorator';
+import { RoleCategory } from '../entities/user/role.entity';
+import { Roles } from 'src/decorators/role.decorator';
 import { LoggedInGuard } from 'src/auth/guards/logged-in.guard';
 import { NotLoggedInGuard } from 'src/auth/guards/not-logged-in.guard';
 
 // entities and dtos
 import { User } from 'src/entities/user/user.entity';
 import { CreateAccountDto } from './dtos/create-account.dto';
+import { UpdateAccountDto } from './dtos/update-account.dto';
 
 @ApiTags('USERS')
 @Controller('api/users')
 export class UsersController {
+  constructor(private usersService: UsersService) {}
+
   // admin guard
   @ApiCookieAuth('connect.sid')
   @ApiOperation({ summary: `get all users' info : ADMIN` })
+  @UseGuards(LoggedInGuard)
   @Get()
+  @Roles([RoleCategory.Admin, RoleCategory.Inhyuk])
   getUsers() {
-    console.log(`find all users' data`);
+    return this.usersService.getAllUsersInfo();
   }
 
   @ApiOperation({ summary: `get an users' login status` })
@@ -71,14 +79,19 @@ export class UsersController {
   @Post()
   createAccount(@Body() data: CreateAccountDto) {
     console.log(data);
+    return this.usersService.createAccount(data);
   }
 
   @ApiOperation({ summary: `local register request` })
   @UseGuards(LoggedInGuard)
   @Post('add/email')
-  addEmail() {}
+  addEmail(@Body() email: string) {
+    console.log('email', email);
+  }
 
   @ApiOperation({ summary: `add an user's personal profile` })
   @Post('add/profile')
-  addPersonalInfo() {}
+  addPersonalInfo(@Body() updatedInfo: UpdateAccountDto) {
+    console.log('updated info', updatedInfo);
+  }
 }

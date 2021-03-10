@@ -16,7 +16,8 @@ import { YoutubeChannel } from './entities/youtube/youtube-channel.entity';
 import { User } from './entities/user/user.entity';
 import { Role } from './entities/user/role.entity';
 import { Verification } from './entities/user/verification.entity';
-import { Profile } from './entities/user/private.profile.entity';
+import { PrivateProfile } from './entities/user/private.profile.entity';
+import { PublicProfile } from './entities/user/public.profile.entity';
 
 // middlewares
 import { LoggerMiddleware } from './middlewares/logger.middleware';
@@ -85,7 +86,8 @@ import { AuthModule } from './auth/auth.module';
         User,
         Role,
         Verification,
-        Profile,
+        PrivateProfile,
+        PublicProfile,
       ],
       autoLoadEntities: true,
       charset: 'utf8mb4',
@@ -104,7 +106,14 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     NotificationsModule,
     UploadsModule,
-    AuthModule,
+    AuthModule.forRoot({
+      googleId: process.env.GOOGLE_ID,
+      googleSecret: process.env.GOOGLE_SECRET,
+      kakaoId: process.env.KAKAO_ID,
+      facebookClientId: process.env.FACEBOOK_CLIENT_ID,
+      facebookSecret: process.env.FACEBOOK_SECRET,
+      facebookId: process.env.FACEBOOK_ID,
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

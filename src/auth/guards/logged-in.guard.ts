@@ -7,6 +7,7 @@ export class LoggedInGuard implements CanActivate {
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
-    return !request.isAuthenticated();
+    console.log('a user info', request.user);
+    return request.isAuthenticated();
   }
 }

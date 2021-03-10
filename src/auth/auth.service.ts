@@ -14,8 +14,8 @@ export class AuthService {
     const result = await user.checkPassword(password);
 
     if (result) {
-      const { password, ...userWithoutPassword } = user;
-      return userWithoutPassword;
+      const { password, ...result } = user;
+      return result;
     }
 
     return null;

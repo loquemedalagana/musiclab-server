@@ -1,10 +1,15 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from 'src/entities/user/user.entity';
 import { Verification } from 'src/entities/user/verification.entity';
 
 import { CreateAccountDto } from './dtos/create-account.dto';
+import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
 
 @Injectable()
 export class UsersService {
@@ -41,34 +46,55 @@ export class UsersService {
     }
   }
 
+  sendVerificationEmail(email: string) {
+    console.log(`email will be sent to ${email}`);
+  }
+
   async createAccount(newMemberInfo: CreateAccountDto): Promise<boolean> {
     const { email, password, displayName } = newMemberInfo;
-    const user = await this.users.findOne({ where: email });
+    const user = await this.userRepository.findByEmail(email);
     if (user) {
-      return false;
+      throw new ForbiddenException(`this account already exists`);
     }
 
-    const newAccount = await this.users.save({
-      email,
-      displayName,
-      password,
-    });
+    try {
+      const newAccount = await this.users.save({
+        email,
+        displayName,
+        password,
+      });
 
-    console.log(newAccount);
-    // 이메일로 전달하기
+      console.log(newAccount);
+      this.sendVerificationEmail(email);
 
-    return true;
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('internal server error');
+    }
   }
 
-  async addEmail(email: string) {
-    // 유저 id로 찾는다(로그인된 상태)
+  async addEmail(userInfo: User, email: string) {
+    const user = await this.userRepository.findByEmail(email);
+    if (!user) {
+      throw new ForbiddenException(`this account already exists`);
+    }
+    try {
+      userInfo.email = email;
+      await this.users.save(userInfo);
+      return true;
+    } catch (error) {
+      console.error(error);
+      throw new InternalServerErrorException('internal server error');
+    }
   }
 
-  async addProfile() {
+  async verifyUser(code: string, personalInfo: AddPersonalInfo) {
     // 토큰으로 찾는다.
+    console.log('code', code, 'personal info', personalInfo);
   }
 
-  async editProfile() {
-    // 정보 수정
+  async editProfile(userInfo: User, updatedInfo: UpdateAccountDto) {
+    console.log('updated info', updatedInfo);
   }
 }
