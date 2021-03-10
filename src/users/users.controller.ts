@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Response,
   UseGuards,
 } from '@nestjs/common';
@@ -20,7 +21,7 @@ import { NotLoggedInGuard } from 'src/auth/guards/not-logged-in.guard';
 // entities and dtos
 import { User } from 'src/entities/user/user.entity';
 import { CreateAccountDto } from './dtos/create-account.dto';
-import { UpdateAccountDto } from './dtos/update-account.dto';
+import { AddPersonalInfo } from './dtos/update-account.dto';
 
 @ApiTags('USERS')
 @Controller('api/users')
@@ -78,20 +79,22 @@ export class UsersController {
   @UseGuards(NotLoggedInGuard)
   @Post()
   createAccount(@Body() data: CreateAccountDto) {
-    console.log(data);
     return this.usersService.createAccount(data);
   }
 
   @ApiOperation({ summary: `local register request` })
   @UseGuards(LoggedInGuard)
   @Post('add/email')
-  addEmail(@Body() email: string) {
-    console.log('email', email);
+  addEmail(@Body() email: string, @UserDecorator() user: User) {
+    return this.usersService.addEmail(user, email);
   }
 
-  @ApiOperation({ summary: `add an user's personal profile` })
+  @ApiOperation({ summary: `add an user's personal profile to be verified` })
   @Post('add/profile')
-  addPersonalInfo(@Body() updatedInfo: UpdateAccountDto) {
-    console.log('updated info', updatedInfo);
+  verifyUser(
+    @Query('token') token: string,
+    @Body() updatedInfo: AddPersonalInfo,
+  ) {
+    return this.usersService.verifyUser(token, updatedInfo);
   }
 }

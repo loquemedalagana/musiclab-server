@@ -82,6 +82,7 @@ export class UsersService {
     try {
       userInfo.email = email;
       await this.users.save(userInfo);
+      this.sendVerificationEmail(email);
       return true;
     } catch (error) {
       console.error(error);
@@ -89,9 +90,10 @@ export class UsersService {
     }
   }
 
-  async verifyUser(code: string, personalInfo: AddPersonalInfo) {
-    // 토큰으로 찾는다.
-    console.log('code', code, 'personal info', personalInfo);
+  async verifyUser(token: string, personalInfo: AddPersonalInfo) {
+    console.log('code', token, 'personal info', personalInfo);
+    const user = await this.userRepository.findByToken(token);
+    console.log(user, personalInfo);
   }
 
   async editProfile(userInfo: User, updatedInfo: UpdateAccountDto) {

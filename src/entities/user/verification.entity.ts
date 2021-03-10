@@ -6,11 +6,11 @@ import { User } from './user.entity';
 @Entity()
 export class Verification extends CoreEntity {
   @Column()
-  code: string;
+  token: string;
 
   @BeforeInsert()
-  createCode(): void {
-    this.code = uuidv4();
+  generateToken(): void {
+    this.token = uuidv4();
   }
 
   // 외래키

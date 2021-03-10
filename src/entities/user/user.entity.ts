@@ -135,4 +135,16 @@ export class UserRepository extends AbstractRepository<User> {
       select: ['id', 'email', 'password'],
     });
   }
+
+  async findByToken(token: string): Promise<User> {
+    const userByToken = await this.getRepositoryFor(Verification)
+      .createQueryBuilder('verification')
+      .select(['verification.token', 'user.id', 'user.email', 'user.password'])
+      .where('verification.token = :token', { token })
+      .innerJoin('user.verification', 'user')
+      .getOneOrFail();
+    console.log(userByToken);
+
+    return userByToken.user;
+  }
 }
