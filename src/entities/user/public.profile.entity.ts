@@ -19,10 +19,7 @@ export class PublicProfile extends CoreEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @OneToOne(() => User, (user) => user.public_profile, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => User, (user) => user.public_profile)
   user: User;
 
   @RelationId((public_profile: PublicProfile) => public_profile.user)

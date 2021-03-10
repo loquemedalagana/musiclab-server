@@ -2,12 +2,10 @@ import {
   Column,
   Entity,
   OneToOne,
-  JoinColumn,
   AbstractRepository,
   EntityRepository,
   BeforeInsert,
   BeforeUpdate,
-  OneToMany,
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { InternalServerErrorException } from '@nestjs/common';
@@ -18,12 +16,7 @@ import { CoreEntity } from 'src/entities/core/core.entity';
 import { PublicProfile } from './public.profile.entity';
 import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
-import { Social } from './social.entity';
-import { Notification } from 'src/entities/notification/notification.entity';
 import { Verification } from './verification.entity';
-
-// dtos
-import { UpdateAccountDto } from 'src/users/dtos/update-account.dto';
 
 @Entity()
 export class User extends CoreEntity {
@@ -44,55 +37,17 @@ export class User extends CoreEntity {
   provider: string;
 
   // relations 1:1
-  @OneToOne(() => PublicProfile, (public_profile) => public_profile.user, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => PublicProfile, (public_profile) => public_profile.user)
   public_profile: PublicProfile;
 
-  @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user)
   private_profile: PrivateProfile;
 
-  @OneToOne(() => Role, (role) => role.user, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => Role, (role) => role.user)
   role: Role;
 
-  @OneToOne(() => Verification, (verification) => verification.user, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => Verification, (verification) => verification.user)
   verification: Verification;
-
-  // social
-  /*
-  @OneToOne(() => Social, (social) => social.user, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  social: Social;
-  * */
-
-  // relations 1:N
-  /*
-  @OneToMany(() => Notification, (notification) => notification.sender, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  sent_notifications: Notification[];
-
-  @OneToMany(() => Notification, (notification) => notification.receiver, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  received_notifications: Notification[];
-  * */
-
-  // 좋아요 목록
 
   @BeforeInsert()
   @BeforeUpdate()

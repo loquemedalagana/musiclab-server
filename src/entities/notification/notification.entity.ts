@@ -10,9 +10,6 @@ import {
   OneToOne,
   RelationId,
 } from 'typeorm';
-import { User } from 'src/entities/user/user.entity';
-import { YoutubeChannel } from 'src/entities/youtube/youtube-channel.entity';
-import { uuid } from 'aws-sdk/clients/customerprofiles';
 
 // user와 1:N
 
@@ -36,38 +33,7 @@ export class Notification {
   @DeleteDateColumn()
   deletedAt: Date | null;
 
-  /*
-  @ManyToOne(() => User, (user) => user.sent_notifications, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  sender: User;
-
-  @RelationId((notification: Notification) => notification.sender)
-  senderId: string;
-
-  @ManyToOne(() => User, (user) => user.received_notifications, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
-  receiver: User;
-
-  @RelationId((notification: Notification) => notification.receiver)
-  receiverId: string;
-  * */
-
-  // one to one
-  /*
-  @OneToOne(
-    () => YoutubeChannel,
-    (youtube_channel) => youtube_channel.notification,
-    {
-      onDelete: 'SET NULL',
-      onUpdate: 'CASCADE',
-    },
-  )
-  youtube_channel: YoutubeChannel;
-  * */
+  // relations
 }
 
 export class NotificationRepository extends AbstractRepository<Notification> {

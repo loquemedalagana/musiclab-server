@@ -17,10 +17,7 @@ export class Role extends CoreEntity {
   })
   category: RoleCategory;
 
-  @OneToOne(() => User, (user) => user.role, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => User, (user) => user.role)
   user: User;
 
   @RelationId((role: Role) => role.user)

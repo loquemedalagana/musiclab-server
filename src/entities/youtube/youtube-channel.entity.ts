@@ -1,7 +1,6 @@
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import { YoutubeCoreEntity } from 'src/entities/core/youtube.core.entity';
 import { YoutubeVideo } from 'src/entities/youtube/youtube-video.entity';
-import { Notification } from 'src/entities/notification/notification.entity';
 
 @Entity()
 export class YoutubeChannel extends YoutubeCoreEntity {
@@ -10,9 +9,4 @@ export class YoutubeChannel extends YoutubeCoreEntity {
 
   @OneToMany(() => YoutubeVideo, (video) => video.channel)
   videos: YoutubeVideo[];
-
-  /*
-  @OneToOne(() => Notification, (notification) => notification.youtube_channel)
-  notification: Notification;
-  * */
 }

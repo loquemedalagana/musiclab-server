@@ -22,10 +22,7 @@ export class Verification extends CoreEntity {
   }
 
   // 외래키
-  @OneToOne(() => User, (user) => user.verification, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => User, (user) => user.verification)
   user: User;
 
   @RelationId((verification: Verification) => verification.user)

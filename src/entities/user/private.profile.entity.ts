@@ -21,10 +21,7 @@ export class PrivateProfile extends CoreEntity {
   @Column({ type: 'enum', enum: Gender })
   gender: Gender;
 
-  @OneToOne(() => User, (user) => user.private_profile, {
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  })
+  @OneToOne(() => User, (user) => user.private_profile)
   user: User;
 
   @RelationId((private_profile: PrivateProfile) => private_profile.user)
