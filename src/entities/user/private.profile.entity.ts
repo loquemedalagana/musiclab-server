@@ -2,6 +2,11 @@ import { Column, Entity, OneToOne, RelationId } from 'typeorm';
 import { CoreEntity } from 'src/entities/core/core.entity';
 import { User } from './user.entity';
 
+export enum Gender {
+  MALE = 'male',
+  FEMALE = 'female',
+}
+
 @Entity()
 export class PrivateProfile extends CoreEntity {
   @Column()
@@ -13,8 +18,8 @@ export class PrivateProfile extends CoreEntity {
   @Column({ type: 'date' })
   birthday: Date;
 
-  @Column('enum', { name: 'gender', enum: ['male', 'female'] })
-  gender: 'male' | 'female';
+  @Column({ type: 'enum', enum: Gender })
+  gender: Gender;
 
   @OneToOne(() => User, (user) => user.private_profile, {
     onDelete: 'SET NULL',

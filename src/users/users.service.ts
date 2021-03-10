@@ -66,13 +66,13 @@ export class UsersService {
     }
 
     try {
-      const newAccount = new User();
-      newAccount.email = email;
-      newAccount.password = password;
-      newAccount.displayName = displayName;
-      await newAccount.hashPassword();
+      const newAccount = await this.users.save({
+        email,
+        displayName,
+        password,
+      });
+
       console.log(newAccount);
-      await this.users.save(newAccount);
 
       const oldVerification = await this.verificationRepository.findExistingToken(
         email,

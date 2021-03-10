@@ -79,6 +79,7 @@ export class UsersController {
   @UseGuards(NotLoggedInGuard)
   @Post()
   createAccount(@Body() data: CreateAccountDto) {
+    console.log('controller', data);
     return this.usersService.createAccount(data);
   }
 
