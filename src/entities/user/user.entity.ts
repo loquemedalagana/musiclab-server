@@ -9,6 +9,7 @@ import {
   BeforeUpdate,
   OneToMany,
 } from 'typeorm';
+import { IsEmail } from 'class-validator';
 import { InternalServerErrorException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -27,6 +28,7 @@ import { UpdateAccountDto } from 'src/users/dtos/update-account.dto';
 @Entity()
 export class User extends CoreEntity {
   @Column('varchar', { name: 'email', nullable: true, length: 30 })
+  @IsEmail()
   email: string;
 
   @Column('varchar', { name: 'displayName', length: 30 })
@@ -46,28 +48,24 @@ export class User extends CoreEntity {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   public_profile: PublicProfile;
 
   @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   private_profile: PrivateProfile;
 
   @OneToOne(() => Role, (role) => role.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   role: Role;
 
   @OneToOne(() => Verification, (verification) => verification.user, {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   verification: Verification;
 
   // social
@@ -76,7 +74,6 @@ export class User extends CoreEntity {
     onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn()
   social: Social;
   * */
 
