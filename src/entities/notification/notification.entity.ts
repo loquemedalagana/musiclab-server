@@ -4,11 +4,8 @@ import {
   AbstractRepository,
   Column,
   CreateDateColumn,
-  ManyToOne,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToOne,
-  RelationId,
 } from 'typeorm';
 
 // user와 1:N

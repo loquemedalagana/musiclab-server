@@ -3,7 +3,6 @@ import {
   Entity,
   BeforeInsert,
   OneToOne,
-  RelationId,
   AbstractRepository,
   EntityRepository,
 } from 'typeorm';
@@ -24,9 +23,6 @@ export class Verification extends CoreEntity {
   // 외래키
   @OneToOne(() => User, (user) => user.verification)
   user: User;
-
-  @RelationId((verification: Verification) => verification.user)
-  userId: string;
 }
 
 // abstract class

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, RelationId } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { CoreEntity } from 'src/entities/core/core.entity';
 import { User } from './user.entity';
 
@@ -23,7 +23,4 @@ export class PrivateProfile extends CoreEntity {
 
   @OneToOne(() => User, (user) => user.private_profile)
   user: User;
-
-  @RelationId((private_profile: PrivateProfile) => private_profile.user)
-  userId: string;
 }

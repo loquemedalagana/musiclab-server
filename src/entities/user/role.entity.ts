@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, RelationId } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import { User } from './user.entity';
 import { CoreEntity } from 'src/entities/core/core.entity';
 
@@ -19,7 +19,4 @@ export class Role extends CoreEntity {
 
   @OneToOne(() => User, (user) => user.role)
   user: User;
-
-  @RelationId((role: Role) => role.user)
-  userId: string;
 }

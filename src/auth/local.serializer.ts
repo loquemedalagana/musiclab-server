@@ -40,7 +40,6 @@ export class LocalSerializer extends PassportSerializer {
       .leftJoin('user.role', 'role')
       .where('user.id = :id', { id: userId })
       .leftJoin('user.public_profile', 'public_profile')
-      .where('user.id = :id', { id: userId })
       .getOneOrFail()
       .then((user) => {
         console.log(user);
