@@ -6,7 +6,10 @@ import {
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from 'src/entities/user/user.entity';
-import { Verification } from 'src/entities/user/verification.entity';
+import {
+  Verification,
+  VerificationRepository,
+} from 'src/entities/user/verification.entity';
 
 import { CreateAccountDto } from './dtos/create-account.dto';
 import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
@@ -18,6 +21,7 @@ export class UsersService {
     @InjectRepository(Verification)
     private verifications: Repository<Verification>, // mail service
     private userRepository: UserRepository,
+    private verificationRepository: VerificationRepository,
     private readonly connection: Connection,
   ) {}
 
@@ -46,26 +50,45 @@ export class UsersService {
     }
   }
 
-  sendVerificationEmail(email: string) {
-    console.log(`email will be sent to ${email}`);
+  sendVerificationEmail(email: string, token: string) {
+    console.log(`email will be sent to ${email}, token ${token}`);
   }
 
   async createAccount(newMemberInfo: CreateAccountDto): Promise<boolean> {
     const { email, password, displayName } = newMemberInfo;
-    const user = await this.userRepository.findByEmail(email);
+    const [user] = await this.userRepository.findByEmalilAndDisplayName(
+      email,
+      displayName,
+    );
+    console.log('found user', user);
     if (user) {
       throw new ForbiddenException(`this account already exists`);
     }
 
     try {
-      const newAccount = await this.users.save({
+      const newAccount = await this.users.save(
+        this.users.create({
+          email,
+          displayName,
+          password,
+        }),
+      );
+
+      const oldVerification = await this.verificationRepository.findExistingToken(
         email,
-        displayName,
-        password,
-      });
+      );
+      if (oldVerification) {
+        await this.verifications.delete(oldVerification);
+      }
+
+      const newVerification = await this.verifications.save(
+        this.verifications.create({
+          user: newAccount,
+        }),
+      );
 
       console.log(newAccount);
-      this.sendVerificationEmail(email);
+      this.sendVerificationEmail(newAccount.email, newVerification.token);
 
       return true;
     } catch (error) {
@@ -82,7 +105,7 @@ export class UsersService {
     try {
       userInfo.email = email;
       await this.users.save(userInfo);
-      this.sendVerificationEmail(email);
+      this.sendVerificationEmail(email, 'dssaa');
       return true;
     } catch (error) {
       console.error(error);

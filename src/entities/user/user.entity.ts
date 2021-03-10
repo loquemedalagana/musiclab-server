@@ -136,6 +136,16 @@ export class UserRepository extends AbstractRepository<User> {
     });
   }
 
+  async findByEmalilAndDisplayName(email: string, displayName: string) {
+    return await this.getRepositoryFor(User)
+      .createQueryBuilder('user')
+      .where('displayName = :displayName OR email = :email', {
+        email,
+        displayName,
+      })
+      .getMany();
+  }
+
   async findByToken(token: string): Promise<User> {
     const userByToken = await this.getRepositoryFor(Verification)
       .createQueryBuilder('verification')

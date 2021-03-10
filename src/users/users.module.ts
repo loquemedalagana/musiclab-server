@@ -6,7 +6,10 @@ import { User, UserRepository } from 'src/entities/user/user.entity';
 import { PublicProfile } from 'src/entities/user/public.profile.entity';
 import { PrivateProfile } from 'src/entities/user/private.profile.entity';
 import { Role } from 'src/entities/user/role.entity';
-import { Verification } from 'src/entities/user/verification.entity';
+import {
+  Verification,
+  VerificationRepository,
+} from 'src/entities/user/verification.entity';
 import { UsersService } from './users.service';
 
 @Module({
@@ -18,6 +21,7 @@ import { UsersService } from './users.service';
       PrivateProfile,
       PublicProfile,
       Verification,
+      VerificationRepository,
     ]),
   ],
   providers: [UsersService],

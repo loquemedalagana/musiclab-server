@@ -1,4 +1,12 @@
-import { Column, Entity, BeforeInsert, OneToOne, RelationId } from 'typeorm';
+import {
+  Column,
+  Entity,
+  BeforeInsert,
+  OneToOne,
+  RelationId,
+  AbstractRepository,
+  EntityRepository,
+} from 'typeorm';
 import { CoreEntity } from 'src/entities/core/core.entity';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './user.entity';
@@ -25,3 +33,14 @@ export class Verification extends CoreEntity {
 }
 
 // abstract class
+@EntityRepository(Verification)
+export class VerificationRepository extends AbstractRepository<Verification> {
+  async findExistingToken(email: string): Promise<Verification> {
+    return await this.manager
+      .createQueryBuilder(Verification, 'verification')
+      .select(['verification.id', 'verification.userId', 'user.email'])
+      .leftJoin('verification.user', 'user')
+      .where('user.email = :email', { email })
+      .getOneOrFail();
+  }
+}
