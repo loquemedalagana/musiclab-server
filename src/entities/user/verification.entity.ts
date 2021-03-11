@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './user.entity';
+import { ONE_HOUR } from 'src/common/constants/common.constants';
 
 @Entity()
 export class Verification {
@@ -35,11 +36,11 @@ export class Verification {
   @BeforeInsert()
   @BeforeUpdate()
   getExpiredDate(): void {
-
+    this.expiredAt = new Date(this.createdAt.getMilliseconds() + ONE_HOUR);
   }
 
   isExpired() {
-    return Date.now() > this.expiredAt;
+    return Date.now() > this.expiredAt.getMilliseconds();
   }
 
   // 외래키
