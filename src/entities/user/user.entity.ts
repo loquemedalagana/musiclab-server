@@ -4,10 +4,7 @@ import {
   OneToOne,
   AbstractRepository,
   EntityRepository,
-  BeforeInsert,
-  BeforeUpdate,
   JoinColumn,
-  InsertResult,
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { InternalServerErrorException } from '@nestjs/common';
@@ -20,6 +17,10 @@ import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
 import { Verification } from './verification.entity';
 import { CreateAccountDto } from '../../users/dtos/create-account.dto';
+import {
+  AddPersonalInfoDto,
+  UpdateAccountDto,
+} from '../../users/dtos/update-account.dto';
 
 @Entity()
 export class User extends CoreEntity {
@@ -115,15 +116,48 @@ export class UserRepository extends AbstractRepository<User> {
       .getMany();
   }
 
-  async findByToken(token: string): Promise<User> {
-    const userByToken = await this.getRepositoryFor(Verification)
+  async findByToken(token: string): Promise<Verification> {
+    return await this.getRepositoryFor(Verification)
       .createQueryBuilder('verification')
-      .select(['verification.token', 'user.id', 'user.email'])
+      .select(['verification.id', 'user.id', 'user.email'])
       .where('verification.token = :token', { token })
       .innerJoin('user.verification', 'user')
       .getOneOrFail();
-    console.log(userByToken);
+  }
 
-    return userByToken.user;
+  async addPersonalInfo(userInfo: User, addedPersonalInfo: AddPersonalInfoDto) {
+    const {
+      birthday,
+      gender,
+      givenName,
+      familyName,
+      avatar,
+      thumbnail,
+      description,
+    } = addedPersonalInfo;
+    const newUserPublicProfile = await this.manager.create(PublicProfile, {
+      avatar,
+      thumbnail,
+      description,
+      user: userInfo,
+    });
+    const newUserPrivateProfile = await this.manager.create(PrivateProfile, {
+      birthday,
+      gender,
+      givenName,
+      familyName,
+      user: userInfo,
+    });
+
+    const privateInfo = await this.manager.save(
+      PublicProfile,
+      newUserPublicProfile,
+    );
+    const publicInfo = await this.manager.save(
+      PrivateProfile,
+      newUserPrivateProfile,
+    );
+
+    return [publicInfo, privateInfo];
   }
 }

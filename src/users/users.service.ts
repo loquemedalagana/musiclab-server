@@ -6,14 +6,19 @@ import {
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from 'src/entities/user/user.entity';
-
+import { Verification } from 'src/entities/user/verification.entity';
 import { CreateAccountDto } from './dtos/create-account.dto';
-import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
+import {
+  UpdateAccountDto,
+  AddPersonalInfoDto,
+} from './dtos/update-account.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(Verification)
+    private readonly verifications: Repository<Verification>,
     private readonly userRepository: UserRepository,
     private readonly connection: Connection,
   ) {}
@@ -84,10 +89,17 @@ export class UsersService {
     }
   }
 
-  async verifyUser(token: string, personalInfo: AddPersonalInfo) {
+  async verifyUser(token: string, personalInfo: AddPersonalInfoDto) {
     console.log('code', token, 'personal info', personalInfo);
-    const user = await this.userRepository.findByToken(token);
-    console.log(user, personalInfo);
+    const verificationInfo = await this.userRepository.findByToken(token);
+    const { user } = verificationInfo;
+    await this.verifications.delete(verificationInfo);
+    console.log(user, personalInfo, `the token ${token} will be deleted`);
+    const [publicInfo, privateInfo] = await this.userRepository.addPersonalInfo(
+      user,
+      personalInfo,
+    );
+    console.log('added personal info', publicInfo, privateInfo);
   }
 
   async editProfile(userInfo: User, updatedInfo: UpdateAccountDto) {

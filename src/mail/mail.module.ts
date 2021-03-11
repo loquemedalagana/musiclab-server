@@ -7,7 +7,10 @@ import { MailController } from './mail.controller';
 
 // entities (notifications should be added)
 import { User } from 'src/entities/user/user.entity';
-import { Verification } from 'src/entities/user/verification.entity';
+import {
+  Verification,
+  VerificationRepository,
+} from 'src/entities/user/verification.entity';
 import { Role } from 'src/entities/user/role.entity';
 
 @Module({
@@ -25,7 +28,14 @@ export class MailModule {
         },
         MailService,
       ],
-      imports: [TypeOrmModule.forFeature([User, Verification, Role])],
+      imports: [
+        TypeOrmModule.forFeature([
+          User,
+          Verification,
+          VerificationRepository,
+          Role,
+        ]),
+      ],
       exports: [MailService],
     };
   }

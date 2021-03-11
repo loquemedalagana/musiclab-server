@@ -33,7 +33,7 @@ export class UpdateAccountDto {
   displayName: string;
 }
 
-export class AddPersonalInfo {
+export class AddPersonalInfoDto {
   @IsDate()
   birthday: Date;
 
@@ -45,6 +45,10 @@ export class AddPersonalInfo {
 
   @IsString()
   familyName: string;
+
+  @IsOptional()
+  @IsString()
+  description: string;
 
   @IsOptional()
   @IsString()

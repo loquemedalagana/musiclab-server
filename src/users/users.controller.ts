@@ -21,7 +21,7 @@ import { NotLoggedInGuard } from 'src/auth/guards/not-logged-in.guard';
 // entities and dtos
 import { User } from 'src/entities/user/user.entity';
 import { CreateAccountDto } from './dtos/create-account.dto';
-import { AddPersonalInfo } from './dtos/update-account.dto';
+import { AddPersonalInfoDto } from './dtos/update-account.dto';
 
 @ApiTags('USERS')
 @Controller('api/users')
@@ -94,7 +94,7 @@ export class UsersController {
   @Post('add/profile')
   verifyUser(
     @Query('token') token: string,
-    @Body() updatedInfo: AddPersonalInfo,
+    @Body() updatedInfo: AddPersonalInfoDto,
   ) {
     return this.usersService.verifyUser(token, updatedInfo);
   }

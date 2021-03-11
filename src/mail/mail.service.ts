@@ -15,14 +15,11 @@ export class MailService {
     @InjectRepository(Verification)
     private readonly verifications: Repository<Verification>,
   ) {}
-  // generate verification code
-  generateVerificationCode() {
-
-  }
 
   // 개인 정보 이메일 발송 (로컬가입, 이메일 등록 유저)
-  sendVerificationEmail(userId: string, email: string) {
-    
+  sendVerificationEmail(userInfo: User) {
+    // generate verification code
+
   }
 
   // 비밀번호 찾기 메일
