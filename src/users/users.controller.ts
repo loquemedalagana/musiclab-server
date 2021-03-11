@@ -26,7 +26,7 @@ import { AddPersonalInfo } from './dtos/update-account.dto';
 @ApiTags('USERS')
 @Controller('api/users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   // admin guard
   @ApiCookieAuth('connect.sid')
