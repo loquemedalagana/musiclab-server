@@ -13,4 +13,10 @@ export class MailController {
   sendVerification(@Query('email') email: string) {
     console.log(`request verification email to ${email} again`);
   }
+
+  @ApiOperation({ summary: `request an user's find password email again` })
+  @Get('find-password')
+  findPassword(@Query('email') email: string) {
+    console.log(`request find password code to ${email} again`);
+  }
 }

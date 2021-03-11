@@ -1,11 +1,17 @@
 import { DynamicModule, Global, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { CONFIG_OPTIONS } from '../common/constants/common.constants';
 import { MailModuleOptions } from './mail.interface';
 import { MailService } from './mail.service';
 import { MailController } from './mail.controller';
 
+// entities (notifications should be added)
+import { User } from 'src/entities/user/user.entity';
+import { Verification } from 'src/entities/user/verification.entity';
+import { Role } from 'src/entities/user/role.entity';
+
 @Module({
-  controllers: [MailController]
+  controllers: [MailController],
 })
 @Global()
 export class MailModule {
@@ -19,6 +25,7 @@ export class MailModule {
         },
         MailService,
       ],
+      imports: [TypeOrmModule.forFeature([User, Verification, Role])],
       exports: [MailService],
     };
   }
