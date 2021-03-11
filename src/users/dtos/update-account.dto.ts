@@ -10,7 +10,7 @@ import { Gender } from 'src/entities/user/private.profile.entity';
 export class UpdateAccountDto {
   @IsOptional()
   @IsString()
-  image: string;
+  avatar: string;
 
   @IsOptional()
   @IsString()
@@ -48,7 +48,7 @@ export class AddPersonalInfo {
 
   @IsOptional()
   @IsString()
-  image: string;
+  avatar: string;
 
   @IsOptional()
   @IsString()

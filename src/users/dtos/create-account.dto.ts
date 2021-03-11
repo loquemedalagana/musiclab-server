@@ -5,6 +5,7 @@ export class CreateAccountDto {
   @ApiProperty({
     example: 'helloworld@musicsseolprise.com',
     description: 'email',
+    required: true,
   })
   @IsEmail()
   email: string;
@@ -12,6 +13,7 @@ export class CreateAccountDto {
   @ApiProperty({
     example: '몬드리안',
     description: 'displayName',
+    required: true,
   })
   @IsString()
   displayName: string;
@@ -19,6 +21,7 @@ export class CreateAccountDto {
   @ApiProperty({
     example: 'my-password',
     description: 'password',
+    required: true,
   })
   @IsString()
   password: string;

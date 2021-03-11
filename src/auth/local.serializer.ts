@@ -34,7 +34,7 @@ export class LocalSerializer extends PassportSerializer {
         'user.displayName',
         'user.email',
         'role.category',
-        'public_profile.image',
+        'public_profile.avatar',
         'public_profile.thumbnail',
       ])
       .leftJoin('user.role', 'role')

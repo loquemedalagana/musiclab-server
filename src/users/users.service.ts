@@ -6,10 +6,6 @@ import {
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UserRepository } from 'src/entities/user/user.entity';
-import {
-  Verification,
-  VerificationRepository,
-} from 'src/entities/user/verification.entity';
 
 import { CreateAccountDto } from './dtos/create-account.dto';
 import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
@@ -18,10 +14,7 @@ import { UpdateAccountDto, AddPersonalInfo } from './dtos/update-account.dto';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly users: Repository<User>,
-    @InjectRepository(Verification)
-    private readonly verifications: Repository<Verification>, // mail service
     private readonly userRepository: UserRepository,
-    private readonly verificationRepository: VerificationRepository,
     private readonly connection: Connection,
   ) {}
 
@@ -35,8 +28,7 @@ export class UsersService {
           'user.displayName',
           'user.email',
           'role.category',
-          'public_profile.image',
-          'public_profile.thumbnail',
+          'public_profile.avatar',
         ])
         .leftJoin('user.role', 'role')
         .leftJoin('user.public_profile', 'public_profile')
@@ -50,12 +42,8 @@ export class UsersService {
     }
   }
 
-  sendVerificationEmail(email: string, token: string) {
-    console.log(`email will be sent to ${email}, token ${token}`);
-  }
-
   async createAccount(newMemberInfo: CreateAccountDto): Promise<boolean> {
-    const { email, password, displayName } = newMemberInfo;
+    const { email, displayName } = newMemberInfo;
     const [user] = await this.userRepository.findByEmalilAndDisplayName(
       email,
       displayName,
@@ -66,28 +54,11 @@ export class UsersService {
     }
 
     try {
-      const newAccount = await this.users.save({
-        email,
-        displayName,
-        password,
-      });
+      const newAccount = await this.userRepository.createAccount(newMemberInfo);
 
       console.log(newAccount);
 
-      const oldVerification = await this.verificationRepository.findExistingToken(
-        email,
-      );
-      if (oldVerification) {
-        await this.verifications.delete(oldVerification);
-      }
-
-      const newVerification = await this.verifications.save(
-        this.verifications.create({
-          user: newAccount,
-        }),
-      );
-
-      this.sendVerificationEmail(newAccount.email, newVerification.token);
+      // send verification email
 
       return true;
     } catch (error) {
@@ -104,7 +75,8 @@ export class UsersService {
     try {
       userInfo.email = email;
       await this.users.save(userInfo);
-      this.sendVerificationEmail(email, 'dssaa');
+
+      // send verification email
       return true;
     } catch (error) {
       console.error(error);

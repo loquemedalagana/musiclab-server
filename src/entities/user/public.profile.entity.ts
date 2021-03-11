@@ -11,7 +11,7 @@ export class PublicProfile extends CoreEntity {
   points: number;
 
   @Column('varchar', { nullable: true, length: 300 })
-  image: string;
+  avatar: string;
 
   @Column('varchar', { nullable: true, length: 300 })
   thumbnail: string;

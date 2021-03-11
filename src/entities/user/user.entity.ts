@@ -6,6 +6,8 @@ import {
   EntityRepository,
   BeforeInsert,
   BeforeUpdate,
+  JoinColumn,
+  InsertResult,
 } from 'typeorm';
 import { IsEmail } from 'class-validator';
 import { InternalServerErrorException } from '@nestjs/common';
@@ -17,6 +19,7 @@ import { PublicProfile } from './public.profile.entity';
 import { PrivateProfile } from './private.profile.entity';
 import { Role } from './role.entity';
 import { Verification } from './verification.entity';
+import { CreateAccountDto } from '../../users/dtos/create-account.dto';
 
 @Entity()
 export class User extends CoreEntity {
@@ -38,29 +41,20 @@ export class User extends CoreEntity {
 
   // relations 1:1
   @OneToOne(() => PublicProfile, (public_profile) => public_profile.user)
+  @JoinColumn()
   public_profile: PublicProfile;
 
   @OneToOne(() => PrivateProfile, (private_profile) => private_profile.user)
+  @JoinColumn()
   private_profile: PrivateProfile;
 
   @OneToOne(() => Role, (role) => role.user)
+  @JoinColumn()
   role: Role;
 
   @OneToOne(() => Verification, (verification) => verification.user)
+  @JoinColumn()
   verification: Verification;
-
-  @BeforeInsert()
-  @BeforeUpdate()
-  async hashPassword(): Promise<void> {
-    if (this.password) {
-      try {
-        this.password = await bcrypt.hash(this.password, 12);
-      } catch (e) {
-        console.log(e);
-        throw new InternalServerErrorException();
-      }
-    }
-  }
 
   async checkPassword(aPassword: string): Promise<boolean> {
     try {
@@ -76,6 +70,25 @@ export class User extends CoreEntity {
 export class UserRepository extends AbstractRepository<User> {
   async hashedPassword(password: string): Promise<string> {
     return await bcrypt.hash(password, 12);
+  }
+
+  async createAccount(data: CreateAccountDto) {
+    const { email, password, displayName } = data;
+    const hashed = await this.hashedPassword(password);
+    const inputResult = await this.getRepositoryFor(User)
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values({
+        email,
+        password: hashed,
+        displayName,
+      })
+      .execute();
+    const { identifiers } = inputResult;
+    return await this.manager.findOneOrFail(User, {
+      id: identifiers[0].id,
+    });
   }
 
   async findByEmail(email: string) {
