@@ -36,7 +36,7 @@ export class Verification {
   @BeforeInsert()
   @BeforeUpdate()
   getExpiredDate(): void {
-    this.expiredAt = new Date(this.createdAt.getMilliseconds() + ONE_HOUR);
+    this.expiredAt = new Date(Date.now() + ONE_HOUR);
   }
 
   isExpired() {
@@ -51,25 +51,25 @@ export class Verification {
 // abstract class
 @EntityRepository(Verification)
 export class VerificationRepository extends AbstractRepository<Verification> {
+  async findExistingToken(email: string): Promise<Verification> {
+    return await this.manager
+      .createQueryBuilder(Verification, 'verification')
+      .select(['verification.id', 'user.email'])
+      .leftJoin('verification.user', 'user')
+      .where('user.email = :email', { email })
+      .getOne();
+  }
+
   async generateNewToken(userInfo: User): Promise<Verification> {
-    const existingToken = await this.manager.findOneOrFail(Verification, {
-      user: userInfo,
-    });
+    const existingToken = await this.findExistingToken(userInfo.email);
+    console.log('existing token', existingToken);
     if (existingToken) {
       await this.manager.delete(Verification, existingToken);
     }
+
     const newVerification = await this.manager.create(Verification, {
       user: userInfo,
     });
     return await this.manager.save(Verification, newVerification);
-  }
-
-  async findExistingToken(email: string): Promise<Verification> {
-    return await this.manager
-      .createQueryBuilder(Verification, 'verification')
-      .select(['verification.id', 'verification.userId', 'user.email'])
-      .leftJoin('verification.user', 'user')
-      .where('user.email = :email', { email })
-      .getOneOrFail();
   }
 }

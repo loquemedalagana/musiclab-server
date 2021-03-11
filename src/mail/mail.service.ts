@@ -24,7 +24,7 @@ export class MailService {
     const newGeneratedToken = await this.verificationRepository.generateNewToken(
       user,
     );
-    console.log(`user email ${user.email} token ${newGeneratedToken.token}`);
+    console.log(`user email ${user.email} token ${newGeneratedToken}`);
   }
 
   async sendFindPasswordEmail(email: string) {
