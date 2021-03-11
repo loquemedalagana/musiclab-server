@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { Connection, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+
+// entities and dtos
 import { User, UserRepository } from 'src/entities/user/user.entity';
 import { Verification } from 'src/entities/user/verification.entity';
 import { CreateAccountDto } from './dtos/create-account.dto';
@@ -12,6 +14,9 @@ import {
   UpdateAccountDto,
   AddPersonalInfoDto,
 } from './dtos/update-account.dto';
+
+// other services
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -21,6 +26,7 @@ export class UsersService {
     private readonly verifications: Repository<Verification>,
     private readonly userRepository: UserRepository,
     private readonly connection: Connection,
+    private readonly mailService: MailService,
   ) {}
 
   async getAllUsersInfo(): Promise<User[]> {
@@ -60,10 +66,10 @@ export class UsersService {
 
     try {
       const newAccount = await this.userRepository.createAccount(newMemberInfo);
-
       console.log(newAccount);
 
       // send verification email
+      await this.mailService.sendVerificationEmail(newAccount);
 
       return true;
     } catch (error) {
@@ -79,9 +85,8 @@ export class UsersService {
     }
     try {
       userInfo.email = email;
-      await this.users.save(userInfo);
-
-      // send verification email
+      const updatedUserInfo = await this.users.save(userInfo);
+      await this.mailService.sendVerificationEmail(updatedUserInfo);
       return true;
     } catch (error) {
       console.error(error);

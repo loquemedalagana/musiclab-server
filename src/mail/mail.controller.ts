@@ -1,6 +1,9 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiCookieAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { MailService } from './mail.service';
+import { LoggedInGuard } from 'src/auth/guards/logged-in.guard';
+import { UserDecorator } from 'src/decorators/user.decorator';
+import { User } from 'src/entities/user/user.entity';
 
 @ApiTags('MAILER')
 @Controller('api/mail')
@@ -9,14 +12,17 @@ export class MailController {
 
   @ApiCookieAuth('connect.sid')
   @ApiOperation({ summary: `request an user's verification email again` })
+  @UseGuards(LoggedInGuard)
   @Get('verification')
-  sendVerification(@Query('email') email: string) {
-    console.log(`request verification email to ${email} again`);
+  sendVerification(@UserDecorator() user: User) {
+    return this.mailService.sendVerificationEmail(user);
   }
 
   @ApiOperation({ summary: `request an user's find password email again` })
   @Get('find-password')
   findPassword(@Query('email') email: string) {
-    console.log(`request find password code to ${email} again`);
+    return this.mailService.sendFindPasswordEmail(email);
   }
+
+  // send personal mail (only by admin)
 }

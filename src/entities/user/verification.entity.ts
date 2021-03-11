@@ -17,8 +17,11 @@ export class Verification {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;
+
+  @Column({ type: 'datetime' })
+  expiredAt: Date;
 
   @Column()
   token: string;
@@ -27,6 +30,16 @@ export class Verification {
   @BeforeUpdate()
   generateToken(): void {
     this.token = uuidv4();
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  getExpiredDate(): void {
+
+  }
+
+  isExpired() {
+    return Date.now() > this.expiredAt;
   }
 
   // 외래키
