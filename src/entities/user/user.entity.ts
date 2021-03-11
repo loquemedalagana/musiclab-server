@@ -136,6 +136,7 @@ export class UserRepository extends AbstractRepository<User> {
       description,
     } = addedPersonalInfo;
     const newUserPublicProfile = await this.manager.create(PublicProfile, {
+      points: 0,
       avatar,
       thumbnail,
       description,
