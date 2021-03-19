@@ -66,6 +66,9 @@ import { AuthModule } from './auth/auth.module';
 
         COOKIE_SECRET: Joi.string(),
         SESSION_SECRET: Joi.string(),
+
+        TRANSLOADIT_KEY: Joi.string(),
+        TRANSLOADIT_SECRET: Joi.string(),
       }),
     }),
     TypeOrmModule.forRoot({
