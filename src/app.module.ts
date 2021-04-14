@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { YoutubeChannelsModule } from './youtube-channels/youtube-channels.module';
 import { YoutubeVideosModule } from './youtube-videos/youtube-videos.module';
 import { TagsModule } from './tags/tags.module';
+
 // entities
 import { Tag } from './entities/tag/tag.entity';
 import { YoutubeVideo } from './entities/youtube/youtube-video.entity';
@@ -86,11 +87,11 @@ import { AuthModule } from './auth/auth.module';
         Tag,
         YoutubeVideo,
         YoutubeChannel,
-        User,
-        Role,
-        Verification,
-        PrivateProfile,
-        PublicProfile,
+        // User,
+        // Role,
+        // Verification,
+        // PrivateProfile,
+        // PublicProfile,
       ],
       autoLoadEntities: true,
       charset: 'utf8mb4',
@@ -101,6 +102,7 @@ import { AuthModule } from './auth/auth.module';
       youtubeApiKey: process.env.GOOGLE_API_KEY,
     }),
     TagsModule,
+    /*
     MailModule.forRoot({
       apiKey: process.env.MAILGUN_API_KEY,
       domain: process.env.MAILGUN_DOMAIN_NAME,
@@ -117,6 +119,7 @@ import { AuthModule } from './auth/auth.module';
       facebookSecret: process.env.FACEBOOK_SECRET,
       facebookId: process.env.FACEBOOK_ID,
     }),
+    * */
   ],
   controllers: [AppController],
   providers: [AppService],
