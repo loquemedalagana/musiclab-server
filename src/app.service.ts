@@ -36,7 +36,9 @@ export class AppService {
           'channel.thumbnails',
         ])
         .leftJoin('video.channel', 'channel')
-        .where(`video.title LIKE :query`, { query: `%${decodedQuery}%` })
+        .where(`video.title LIKE :query OR video.description LIKE :query`, {
+          query: `%${decodedQuery}%`,
+        })
         .orderBy({
           'video.visitedCount': 'DESC',
           'video.publishedAt': 'DESC',
