@@ -96,6 +96,7 @@ import { AuthModule } from './auth/auth.module';
       autoLoadEntities: true,
       charset: 'utf8mb4',
     }),
+    TypeOrmModule.forFeature([YoutubeVideo]),
     ScheduleModule.forRoot(),
     YoutubeChannelsModule,
     YoutubeVideosModule.forRoot({
