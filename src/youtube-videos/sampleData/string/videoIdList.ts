@@ -23,6 +23,19 @@ const videoIdList = [
   'mtn7POTYit0', // 인하대 이슬사
   'lv4gaXD8Vwk', // 고음 라이브 모음
   't1iMkAcPSoA', // 팬과 부르는 진혼
+  '1aU-oDOc6_A', // 엇갈린 길
+  'z2hIifoNmTw', // 여기까진가요
+  'RBBNpOo6yBc', // 직접 배웠습니다.
+  'S_cgH7nSXeI', // tbc
+  'https://youtu.be/uorqZZ6IC-E', // miracle 2017
+  'A9kmi8SLv30', // 학원영상ㅡㅡ
+  'https://youtu.be/YoAHy74ZrjI', // 그대 눈물까지도
+  'https://youtu.be/WGK1aWcjoT4', // 사했
+  'https://youtu.be/7_njsKVW33k', // mbc official (그대 눈물까지도)
+  'https://youtu.be/TT36QDwjx90', // mbc 사했
+  'https://youtu.be/_BmvX1a9A4A', // 창밖의 여자
 ];
 
 export default videoIdList;
+
+// https://youtu.be/1aU-oDOc6_A (엇갈린 길)
