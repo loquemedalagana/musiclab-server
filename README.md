@@ -1,7 +1,7 @@
 ## Musiclab Server V2
 - languages: Korean, English, Spanish
 
-## Por qué eligé Nest.js?
+## Por qué elegí Nest.js?
 - para la extensión de la app
 - para el código limpio
 
