@@ -1,9 +1,9 @@
 ## Musiclab Server V2
 - languages: Korean, English, Spanish
 
-## Nest.js 선택한 이유
-- 확장성 고려하기
-- 정돈되지 않은 express코드에 짜증이 났음.
+## Por qué eligé Nest.js?
+- para la extensión de la app
+- para el código limpio
 
 ## folders
 1. /auth
@@ -13,24 +13,23 @@
 3. /users
 /profiles
 
-4. /youtube -> 모두 접근 가능
+4. /youtube -> all
     - channels
     - videos
 
-5. /posts -> 회원만 접근 가능
+5. /posts -> solo para miembros
     
-6. /comments -> 댓글 달기
+6. /comments -> comentarios
 
-7. /feedbacks -> 답글 달기
+7. /feedbacks -> respuestas
 
-8. /tags -> 태그 검색
+8. /tags -> buequeda para tag
 
 9. /uploads
 
 10. /notifications
 
 ## Database Structure (entity)
-musiclab_temp -> musiclab 옮기기
 
 ### DTO
 [api 주소 정의하기](https://www.codemag.com/Article/1907081/Nest.js-Step-by-Step)
@@ -69,6 +68,3 @@ musiclab_temp -> musiclab 옮기기
 3. delete-channel
 
 #### 6) tags DTO
-
-## 추가할 기능
-- 회원에 한해 영상 다운로드 가능
